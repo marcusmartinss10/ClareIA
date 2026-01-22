@@ -1,30 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { database } from '@/lib/db';
-
-// Tipos de sessão
-interface Session {
-    userId: string;
-    clinicId: string;
-    role: 'ADMIN' | 'DENTIST' | 'RECEPTIONIST';
-    subscriptionStatus: 'ACTIVE' | 'OVERDUE' | 'CANCELLED';
-}
-
-// Obter sessão a partir de cookies
-export async function getSession(): Promise<Session | null> {
-    const cookieStore = cookies();
-    const sessionCookie = cookieStore.get('session');
-
-    if (!sessionCookie) {
-        return null;
-    }
-
-    try {
-        return JSON.parse(sessionCookie.value) as Session;
-    } catch {
-        return null;
-    }
-}
+import { getSession } from '@/lib/auth';
 
 // Obter usuário da sessão
 export async function GET() {

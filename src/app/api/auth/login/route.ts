@@ -14,14 +14,19 @@ export async function POST(request: NextRequest) {
         }
 
         // Buscar usuário por email
+        console.log('[LOGIN] Attempting to find user with email:', email);
         const user = await database.users.findByEmail(email);
+        console.log('[LOGIN] User found result:', user ? 'Found' : 'Not found', user ? { id: user.id, email: user.email } : null);
 
         if (!user) {
+            console.log('[LOGIN] User not found in database');
             return NextResponse.json(
                 { error: 'Usuário não encontrado' },
                 { status: 401 }
             );
         }
+
+        console.log('[LOGIN] User has passwordHash:', !!user.passwordHash);
 
         // Verificar senha
         const isValidPassword = await bcrypt.compare(password, user.passwordHash);

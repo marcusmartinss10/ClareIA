@@ -83,12 +83,14 @@ export const database = {
         },
 
         findByEmail: async (email: string): Promise<User | null> => {
+            console.log('[DB] findByEmail called with:', email);
             const { data, error } = await supabaseAdmin
                 .from('users')
                 .select('*')
                 .eq('email', email)
                 .single();
 
+            console.log('[DB] findByEmail result - data:', data ? 'Found' : 'null', 'error:', error?.message || 'none');
             if (error || !data) return null;
             return toCamelCase<User>(data);
         },

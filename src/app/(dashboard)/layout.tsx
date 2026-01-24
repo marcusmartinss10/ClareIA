@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { ToastProvider } from '@/components/Toast';
 import Logo from '@/components/Logo';
+import NotificationsPopover from '@/components/NotificationsPopover';
 
 interface User {
   id: string;
@@ -665,10 +666,7 @@ export default function DashboardLayout({
                 month: 'long'
               })}
             </span>
-            <button className="topbar-btn">
-              🔔
-              <span className="notification-dot" />
-            </button>
+            <NotificationsPopover />
           </div>
         </header>
 

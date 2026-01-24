@@ -105,26 +105,41 @@ export default function ConsultationPage() {
 
                 const emAndamento = agendamentosFormatados.filter((a: AgendamentoHoje) => a.status === 'IN_PROGRESS');
                 if (emAndamento.length > 0) {
-                    const resConsultas = await fetch('/api/consultations?status=IN_PROGRESS');
+                    const resConsultas = await fetch('/api/consultations');
                     if (resConsultas.ok) {
                         const dataConsultas = await resConsultas.json();
-                        const atendimentosAtivos = (dataConsultas.atendimentos || []).map((c: any) => {
-                            const agendamento = emAndamento.find((a: AgendamentoHoje) => a.id === c.appointmentId);
-                            return {
-                                id: c.id,
-                                appointmentId: c.appointmentId,
-                                pacienteId: c.patientId,
-                                pacienteNome: agendamento?.pacienteNome || 'Paciente',
-                                motivo: agendamento?.motivo || '',
-                                observacoesAgenda: agendamento?.observacoes,
-                                dentistaId: c.dentistId,
-                                dentistaNome: agendamento?.dentistaNome || 'Dentista',
-                                inicioAt: new Date(c.startedAt),
-                                status: c.status,
-                                tempoTotal: c.totalTime || Math.floor((Date.now() - new Date(c.startedAt).getTime()) / 1000),
-                                tempoPausado: c.pauseTime || 0,
-                            };
-                        });
+                        const atendimentosAtivos = (dataConsultas.atendimentos || [])
+                            .filter((c: any) => c.status === 'IN_PROGRESS' || c.status === 'PAUSED')
+                            .map((c: any) => {
+                                const agendamento = emAndamento.find((a: AgendamentoHoje) => a.id === c.appointmentId);
+
+                                let tempoTotal = 0;
+                                if (c.status === 'PAUSED' && c.pausedAt) {
+                                    const pausedAtTime = new Date(c.pausedAt).getTime();
+                                    const startedAtTime = new Date(c.startedAt).getTime();
+                                    tempoTotal = Math.floor((pausedAtTime - startedAtTime) / 1000) - (c.pauseTime || 0);
+                                } else {
+                                    const startedAtTime = new Date(c.startedAt).getTime();
+                                    tempoTotal = Math.floor((Date.now() - startedAtTime) / 1000) - (c.pauseTime || 0);
+                                }
+
+                                if (tempoTotal < 0) tempoTotal = 0;
+
+                                return {
+                                    id: c.id,
+                                    appointmentId: c.appointmentId,
+                                    pacienteId: c.patientId,
+                                    pacienteNome: agendamento?.pacienteNome || 'Paciente',
+                                    motivo: agendamento?.motivo || '',
+                                    observacoesAgenda: agendamento?.observacoes,
+                                    dentistaId: c.dentistId,
+                                    dentistaNome: agendamento?.dentistaNome || 'Dentista',
+                                    inicioAt: new Date(c.startedAt),
+                                    status: c.status,
+                                    tempoTotal: c.totalTime || tempoTotal,
+                                    tempoPausado: c.pauseTime || 0,
+                                };
+                            });
                         setAtendimentos(atendimentosAtivos);
                     }
                 }
@@ -137,9 +152,10 @@ export default function ConsultationPage() {
     };
 
     const formatarTempo = (segundos: number) => {
+        if (segundos < 0) segundos = 0;
         const h = Math.floor(segundos / 3600);
         const m = Math.floor((segundos % 3600) / 60);
-        const s = segundos % 60;
+        const s = Math.floor(segundos % 60);
         return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
     };
 

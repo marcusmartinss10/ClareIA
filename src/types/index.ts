@@ -311,3 +311,19 @@ export const UrgencyLabels: Record<OrderUrgency, string> = {
     urgent: 'Urgente',
     express: 'Expresso',
 };
+
+// Notificações
+export type NotificationType = 'info' | 'success' | 'warning' | 'error';
+
+export interface Notification {
+    id: string;
+    userId: string;
+    clinicId: string;
+    type: NotificationType;
+    title: string;
+    message: string;
+    data?: any;
+    read: boolean;
+    createdAt: Date;
+    readAt?: Date;
+}

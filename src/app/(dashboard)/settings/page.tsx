@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { PlansSection } from './components/PlansSection';
 
 interface Assinatura {
   id: string;
@@ -945,35 +946,15 @@ export default function SettingsPage() {
                 </>
               )}
 
-              {/* Subscription Tab */}
-              {tab === 'assinatura' && assinatura && (
+              {/* Subscription Tab - Updated with new Plans Structure */}
+              {tab === 'assinatura' && (
                 <>
                   <div className="content-header">
-                    <h2 className="content-title">Assinatura</h2>
-                    <p className="content-subtitle">Gerencie seu plano e faturamento.</p>
+                    <h2 className="content-title">Planos e Assinatura</h2>
+                    <p className="content-subtitle">Escolha o melhor plano para sua clínica.</p>
                   </div>
-                  <div className="form-content">
-                    <div className="subscription-card">
-                      <div className="sub-header">
-                        <div>
-                          <div className="plan-name">{assinatura.plano}</div>
-                          <div className="plan-price">R$ {assinatura.preco.toFixed(2).replace('.', ',')} / mês</div>
-                        </div>
-                        <span className="status-active">Ativa</span>
-                      </div>
-                      <div className="features-grid">
-                        {assinatura.recursos.map((recurso, index) => (
-                          <div key={index} className="feature-item">
-                            <span className="feature-check">✓</span>
-                            {recurso}
-                          </div>
-                        ))}
-                      </div>
-                      <div className="sub-footer">
-                        <span>Renova em: {new Date(assinatura.dataRenovacao).toLocaleDateString('pt-BR')}</span>
-                        <button className="btn-upgrade">Fazer Upgrade</button>
-                      </div>
-                    </div>
+                  <div className="form-content" style={{ maxWidth: '100%' }}>
+                    <PlansSection currentPlan="profissional" />
                   </div>
                 </>
               )}

@@ -1,7 +1,10 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { database } from '@/lib/db';
+
 import { getSession } from '@/lib/auth';
+
+export const dynamic = 'force-dynamic';
 
 // Obter usuário da sessão
 export async function GET() {

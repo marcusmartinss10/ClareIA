@@ -1,48 +1,46 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { supabase } from '@/lib/supabase/client';
 import Logo from '@/components/Logo';
 
-export default function LoginPage() {
-  const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+export default function ForgotPasswordPage() {
+    const [email, setEmail] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        setMessage(null);
 
-    try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
+        try {
+            const { error } = await supabase.auth.resetPasswordForEmail(email, {
+                redirectTo: `${window.location.origin}/auth/reset-password`,
+            });
 
-      const data = await res.json();
+            if (error) throw error;
 
-      if (!res.ok) {
-        throw new Error(data.error || 'Erro ao fazer login');
-      }
+            setMessage({
+                type: 'success',
+                text: 'Instruções de recuperação enviadas para seu e-mail.'
+            });
+            setEmail('');
+        } catch (error: any) {
+            setMessage({
+                type: 'error',
+                text: error.message || 'Erro ao enviar e-mail de recuperação.'
+            });
+        } finally {
+            setLoading(false);
+        }
+    };
 
-      router.push('/dashboard');
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao fazer login');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <div className="login-page">
-      <style jsx>{`
-                .login-page {
+    return (
+        <div className="forgot-password-page">
+            <style jsx>{`
+                .forgot-password-page {
                     min-height: 100vh;
                     position: relative;
                     overflow: hidden;
@@ -150,14 +148,6 @@ export default function LoginPage() {
                     margin-bottom: 2.5rem;
                 }
 
-
-                .logo-title {
-                    font-size: 1.875rem;
-                    font-weight: 700;
-                    color: white;
-                    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-                }
-
                 .logo-subtitle {
                     color: #9ca3af;
                     font-size: 0.875rem;
@@ -167,7 +157,7 @@ export default function LoginPage() {
                 }
 
                 /* Form */
-                .login-form {
+                .forgot-form {
                     display: flex;
                     flex-direction: column;
                     gap: 1.5rem;
@@ -224,50 +214,25 @@ export default function LoginPage() {
                     box-shadow: 0 0 0 2px rgba(43, 189, 238, 0.1);
                 }
 
-                .password-toggle {
-                    position: absolute;
-                    right: 1rem;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    color: #6b7280;
-                    background: none;
-                    border: none;
-                    cursor: pointer;
-                    font-size: 1.25rem;
-                    transition: color 0.2s;
-                }
-
-                .password-toggle:hover {
-                    color: #2bbdee;
-                }
-
-                /* Error Message */
-                .error-message {
+                /* Message */
+                .message-box {
                     padding: 0.75rem;
-                    background: rgba(239, 68, 68, 0.1);
-                    border: 1px solid rgba(239, 68, 68, 0.3);
                     border-radius: 0.5rem;
-                    color: #f87171;
                     font-size: 0.875rem;
                     text-align: center;
+                    margin-bottom: 1rem;
                 }
 
-                /* Forgot Password */
-                .forgot-link {
-                    text-align: right;
-                    margin-top: 0.25rem;
+                .message-success {
+                    background: rgba(16, 185, 129, 0.1);
+                    border: 1px solid rgba(16, 185, 129, 0.3);
+                    color: #34d399;
                 }
 
-                .forgot-link a {
-                    font-size: 0.75rem;
-                    color: #9ca3af;
-                    text-decoration: none;
-                    font-weight: 500;
-                    transition: color 0.2s;
-                }
-
-                .forgot-link a:hover {
-                    color: white;
+                .message-error {
+                    background: rgba(239, 68, 68, 0.1);
+                    border: 1px solid rgba(239, 68, 68, 0.3);
+                    color: #f87171;
                 }
 
                 /* Submit Button */
@@ -316,29 +281,21 @@ export default function LoginPage() {
                     cursor: not-allowed;
                 }
 
-                /* Divider */
-                .divider {
-                    margin-top: 2rem;
-                    padding-top: 1.5rem;
-                    border-top: 1px solid rgba(255, 255, 255, 0.05);
+                /* Back Link */
+                .back-link {
+                    margin-top: 1.5rem;
                     text-align: center;
                 }
 
-                .divider p {
+                .back-link a {
                     color: #9ca3af;
                     font-size: 0.875rem;
-                }
-
-                .divider a {
-                    color: #2bbdee;
-                    font-weight: 500;
                     text-decoration: none;
-                    margin-left: 0.25rem;
                     transition: color 0.2s;
                 }
 
-                .divider a:hover {
-                    color: rgba(43, 189, 238, 0.8);
+                .back-link a:hover {
+                    color: white;
                 }
 
                 /* Footer */
@@ -354,118 +311,66 @@ export default function LoginPage() {
                     letter-spacing: 0.15em;
                     text-transform: uppercase;
                 }
-
-                @media (max-width: 480px) {
-                    .glass-card {
-                        padding: 2rem;
-                    }
-                }
             `}</style>
 
-      {/* Background Layers */}
-      <div className="bg-layer">
-        <div className="bg-gradient" />
-        <div className="blob-1" />
-        <div className="blob-2" />
-
-        {/* Particles */}
-        <div className="particle" style={{ width: 4, height: 4, left: '10%', bottom: 0, animationDuration: '15s', animationDelay: '0s' }} />
-        <div className="particle" style={{ width: 8, height: 8, left: '20%', bottom: 0, animationDuration: '25s', animationDelay: '2s' }} />
-        <div className="particle" style={{ width: 4, height: 4, left: '30%', bottom: 0, animationDuration: '18s', animationDelay: '5s' }} />
-        <div className="particle" style={{ width: 6, height: 6, left: '45%', bottom: 0, animationDuration: '22s', animationDelay: '1s' }} />
-        <div className="particle" style={{ width: 4, height: 4, left: '60%', bottom: 0, animationDuration: '20s', animationDelay: '7s' }} />
-        <div className="particle" style={{ width: 8, height: 8, left: '75%', bottom: 0, animationDuration: '28s', animationDelay: '3s' }} />
-        <div className="particle" style={{ width: 4, height: 4, left: '85%', bottom: 0, animationDuration: '16s', animationDelay: '6s' }} />
-        <div className="particle" style={{ width: 6, height: 6, left: '95%', bottom: 0, animationDuration: '24s', animationDelay: '4s' }} />
-      </div>
-
-      {/* Content */}
-      <div className="content-container">
-        <div className="glass-card">
-          {/* Logo Header */}
-          <div className="logo-header">
-            <Logo size="xl" theme="dark" />
-            <p className="logo-subtitle">Inteligência Dental de Precisão</p>
-          </div>
-
-          {/* Login Form */}
-          <form className="login-form" onSubmit={handleSubmit}>
-            {/* Error Message */}
-            {error && (
-              <div className="error-message">{error}</div>
-            )}
-
-            {/* Email Field */}
-            <div className="form-group">
-              <label className="form-label" htmlFor="email">Email</label>
-              <div className="input-wrapper">
-                <span className="input-icon">✉️</span>
-                <input
-                  id="email"
-                  type="email"
-                  className="glass-input"
-                  placeholder="dr.silva@clareia.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
+            {/* Background Layers */}
+            <div className="bg-layer">
+                <div className="bg-gradient" />
+                <div className="blob-1" />
+                <div className="blob-2" />
+                {/* Particles... reusing styling from login */}
+                <div className="particle" style={{ width: 4, height: 4, left: '10%', bottom: 0, animationDuration: '15s', animationDelay: '0s' }} />
+                {/* ... more particles if desired */}
             </div>
 
-            {/* Password Field */}
-            <div className="form-group">
-              <label className="form-label" htmlFor="password">Senha</label>
-              <div className="input-wrapper">
-                <span className="input-icon">🔒</span>
-                <input
-                  id="password"
-                  type={showPassword ? 'text' : 'password'}
-                  className="glass-input"
-                  style={{ paddingRight: '3rem' }}
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-                <button
-                  type="button"
-                  className="password-toggle"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? '🙈' : '👁️'}
-                </button>
-              </div>
+            <div className="content-container">
+                <div className="glass-card">
+                    <div className="logo-header">
+                        <Logo size="xl" theme="dark" />
+                        <p className="logo-subtitle">Recuperação de Senha</p>
+                    </div>
+
+                    <form className="forgot-form" onSubmit={handleSubmit}>
+                        {message && (
+                            <div className={`message-box ${message.type === 'success' ? 'message-success' : 'message-error'}`}>
+                                {message.text}
+                            </div>
+                        )}
+
+                        <div className="form-group">
+                            <label className="form-label" htmlFor="email">Email Cadastrado</label>
+                            <div className="input-wrapper">
+                                <span className="input-icon">✉️</span>
+                                <input
+                                    id="email"
+                                    type="email"
+                                    className="glass-input"
+                                    placeholder="seu@email.com"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <button
+                            type="submit"
+                            className="liquid-button"
+                            disabled={loading}
+                        >
+                            {loading ? 'Enviando...' : 'Enviar Instruções'}
+                        </button>
+                    </form>
+
+                    <div className="back-link">
+                        <Link href="/login">Voltar para Login</Link>
+                    </div>
+                </div>
+
+                <div className="login-footer">
+                    <p>© 2026 ClareIA Systems. Ambiente Seguro.</p>
+                </div>
             </div>
-
-            {/* Forgot Password */}
-            <div className="forgot-link">
-              <Link href="/forgot-password">Esqueci minha senha</Link>
-            </div>
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="liquid-button"
-              disabled={loading}
-            >
-              {loading ? 'Entrando...' : 'Entrar'}
-            </button>
-          </form>
-
-          {/* Divider */}
-          <div className="divider">
-            <p>
-              Novo no ClareIA?
-              <a href="#">Solicitar Acesso</a>
-            </p>
-          </div>
         </div>
-
-        {/* Footer */}
-        <div className="login-footer">
-          <p>© 2026 ClareIA Systems. Ambiente Seguro.</p>
-        </div>
-      </div>
-    </div>
-  );
+    );
 }

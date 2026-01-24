@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
     title: 'ClareIA - Sistema Odontológico Inteligente',
     description: 'Gestão inteligente para clínicas odontológicas. Agenda, prontuário, CRM e controle de produtividade.',
@@ -17,7 +19,11 @@ export default function RootLayout({
         <html lang="pt-BR">
             <head>
                 <link
-                    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap"
+                    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+                    rel="stylesheet"
+                />
+                <link
+                    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@0..1,0..1,0..1,0..1&display=swap"
                     rel="stylesheet"
                 />
             </head>

@@ -1,23 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
+import { getSession } from '@/lib/auth';
 import { database } from '@/lib/db';
 
-function getClinicId(): string | null {
-    const cookieStore = cookies();
-    const sessionCookie = cookieStore.get('session');
-    if (!sessionCookie) return null;
-    try {
-        const session = JSON.parse(sessionCookie.value);
-        return session.clinicId;
-    } catch {
-        return null;
-    }
+async function getClinicId(): Promise<string | null> {
+    const session = await getSession();
+    return session?.clinicId || null;
 }
 
 // GET - Listar usuários (dentistas)
 export async function GET(request: NextRequest) {
     try {
-        const clinicId = getClinicId();
+        const clinicId = await getClinicId();
         if (!clinicId) {
             return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
         }

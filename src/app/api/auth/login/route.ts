@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import { database } from '@/lib/db';
+import { signSession } from '@/lib/auth/session';
 
 export async function POST(request: NextRequest) {
     try {
@@ -67,13 +68,15 @@ export async function POST(request: NextRequest) {
             },
         });
 
-        // Definir cookie de sessão simples
-        response.cookies.set('session', JSON.stringify({
+        // Definir cookie de sessão assinado
+        const sessionToken = await signSession({
             userId: user.id,
             clinicId: user.clinicId,
             role: user.role,
             subscriptionStatus: subscription.status,
-        }), {
+        });
+
+        response.cookies.set('session', sessionToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'lax',

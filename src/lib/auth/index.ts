@@ -110,6 +110,9 @@ export interface Session {
 }
 
 // Obter sessão a partir de cookies (for API routes)
+import { verifySession } from './session';
+
+// Obter sessão a partir de cookies (for API routes)
 export async function getSession(): Promise<Session | null> {
     const { cookies } = await import('next/headers');
     const cookieStore = cookies();
@@ -119,13 +122,17 @@ export async function getSession(): Promise<Session | null> {
         return null;
     }
 
-    try {
-        const sessionData = JSON.parse(sessionCookie.value);
-        return {
-            ...sessionData,
-            id: sessionData.userId,
-        };
-    } catch {
+    const payload = await verifySession(sessionCookie.value);
+
+    if (!payload) {
         return null;
     }
+
+    return {
+        userId: payload.userId as string,
+        id: payload.userId as string,
+        clinicId: payload.clinicId as string,
+        role: payload.role as 'ADMIN' | 'DENTIST' | 'RECEPTIONIST',
+        subscriptionStatus: payload.subscriptionStatus as 'ACTIVE' | 'OVERDUE' | 'CANCELLED',
+    };
 }

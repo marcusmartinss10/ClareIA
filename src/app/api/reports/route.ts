@@ -1,21 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
+import { getSession } from '@/lib/auth';
 import { supabaseAdmin } from '@/lib/supabase/client';
-
-function getSession() {
-    const cookieStore = cookies();
-    const sessionCookie = cookieStore.get('session');
-    if (!sessionCookie) return null;
-    try {
-        return JSON.parse(sessionCookie.value);
-    } catch {
-        return null;
-    }
-}
 
 export async function GET(request: NextRequest) {
     try {
-        const session = getSession();
+        const session = await getSession();
         if (!session?.clinicId) {
             return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
         }

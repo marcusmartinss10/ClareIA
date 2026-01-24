@@ -1,22 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
+import { getSession } from '@/lib/auth';
 import { database } from '@/lib/db';
-
-function getSession(): { userId: string; clinicId: string; role: string } | null {
-    const cookieStore = cookies();
-    const sessionCookie = cookieStore.get('session');
-    if (!sessionCookie) return null;
-    try {
-        return JSON.parse(sessionCookie.value);
-    } catch {
-        return null;
-    }
-}
 
 // GET - Listar atendimentos
 export async function GET(request: NextRequest) {
     try {
-        const session = getSession();
+        const session = await getSession();
         if (!session) {
             return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
         }
@@ -47,7 +36,7 @@ export async function GET(request: NextRequest) {
 // POST - Iniciar novo atendimento
 export async function POST(request: NextRequest) {
     try {
-        const session = getSession();
+        const session = await getSession();
         if (!session) {
             return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
         }
@@ -101,7 +90,7 @@ export async function POST(request: NextRequest) {
 // PATCH - Pausar, retomar ou encerrar atendimento
 export async function PATCH(request: NextRequest) {
     try {
-        const session = getSession();
+        const session = await getSession();
         if (!session) {
             return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
         }

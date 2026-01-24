@@ -7,6 +7,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { database } from '@/lib/db';
 import { getSession } from '@/lib/auth';
+import { checkFeatureAccess } from '@/lib/plans';
 
 export async function GET(request: NextRequest) {
     try {
@@ -14,6 +15,14 @@ export async function GET(request: NextRequest) {
 
         if (!session) {
             return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
+        }
+
+        const hasAccess = await checkFeatureAccess(session.clinicId, 'prosthetics');
+        if (!hasAccess) {
+            return NextResponse.json(
+                { error: 'Seu plano não inclui acesso ao módulo de Protéticos. Faça upgrade para acessar.' },
+                { status: 403 }
+            );
         }
 
         const { searchParams } = new URL(request.url);
@@ -42,6 +51,14 @@ export async function POST(request: NextRequest) {
 
         if (!session) {
             return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
+        }
+
+        const hasAccess = await checkFeatureAccess(session.clinicId, 'prosthetics');
+        if (!hasAccess) {
+            return NextResponse.json(
+                { error: 'Seu plano não inclui acesso ao módulo de Protéticos. Faça upgrade para acessar.' },
+                { status: 403 }
+            );
         }
 
         if (session.role !== 'ADMIN' && session.role !== 'DENTIST') {

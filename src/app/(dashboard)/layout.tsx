@@ -57,6 +57,12 @@ const menuItems = [
     icon: '⚙️',
     roles: ['ADMIN']
   },
+  {
+    href: '/subscription',
+    label: 'Assinatura',
+    icon: '💎',
+    roles: ['ADMIN']
+  },
 ];
 
 export default function DashboardLayout({
@@ -69,10 +75,26 @@ export default function DashboardLayout({
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [features, setFeatures] = useState<any>(null);
 
   useEffect(() => {
     fetchUser();
+    fetchSubscription();
   }, []);
+
+  const fetchSubscription = async () => {
+    try {
+      const res = await fetch('/api/organization/subscription');
+      if (res.ok) {
+        const sub = await res.json();
+        if (sub && sub.plan) {
+          setFeatures(sub.plan.features);
+        }
+      }
+    } catch (e) {
+      console.error("Failed to load subscription", e);
+    }
+  };
 
   const fetchUser = async () => {
     try {
@@ -96,7 +118,17 @@ export default function DashboardLayout({
   };
 
   const filteredMenuItems = menuItems.filter(
-    item => !user || item.roles.includes(user.role)
+    item => {
+      if (!user || !item.roles.includes(user.role)) return false;
+
+      // Feature Gating
+      if (item.href === '/laboratorio') {
+        // Check if plan has prosthetics feature
+        if (features && !features.prosthetics) return false;
+      }
+
+      return true;
+    }
   );
 
   const getRoleLabel = (role: string) => {

@@ -7,6 +7,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { database } from '@/lib/db';
 import { getSession } from '@/lib/auth';
+import { checkFeatureAccess } from '@/lib/plans';
 import bcrypt from 'bcryptjs';
 
 export async function GET(request: NextRequest) {
@@ -15,6 +16,14 @@ export async function GET(request: NextRequest) {
 
         if (!session) {
             return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
+        }
+
+        const hasAccess = await checkFeatureAccess(session.clinicId, 'prosthetics');
+        if (!hasAccess) {
+            return NextResponse.json(
+                { error: 'Seu plano não inclui acesso ao módulo de Protéticos. Faça upgrade para acessar.' },
+                { status: 403 }
+            );
         }
 
         const proteticos = await database.proteticos.findByClinic(session.clinicId);
@@ -41,6 +50,14 @@ export async function POST(request: NextRequest) {
 
         if (!session) {
             return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
+        }
+
+        const hasAccess = await checkFeatureAccess(session.clinicId, 'prosthetics');
+        if (!hasAccess) {
+            return NextResponse.json(
+                { error: 'Seu plano não inclui acesso ao módulo de Protéticos. Faça upgrade para acessar.' },
+                { status: 403 }
+            );
         }
 
         if (session.role !== 'ADMIN') {

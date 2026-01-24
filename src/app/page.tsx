@@ -276,8 +276,6 @@ export default function LandingPage() {
                     }
                 }
 
-
-
                 .glass-card {
                     background: rgba(255, 255, 255, 0.03);
                     backdrop-filter: blur(12px);
@@ -461,10 +459,6 @@ export default function LandingPage() {
                     display: flex;
                     flex-direction: column;
                     gap: 8px;
-                }
-
-                .progress-item {
-                    
                 }
 
                 .progress-label {
@@ -761,8 +755,6 @@ export default function LandingPage() {
                     }
                 }
 
-
-
                 .cta-btn-secondary {
                     background: rgba(255, 255, 255, 0.03);
                     backdrop-filter: blur(12px);
@@ -799,176 +791,221 @@ export default function LandingPage() {
                     padding: 0 1.5rem;
                 }
 
-                .footer-grid {
+                /* About Section */
+                .about-section {
+                    padding: 8rem 0;
+                    position: relative;
+                    background: linear-gradient(to bottom, #050505, #080b10);
+                }
+
+                .about-grid {
                     display: grid;
                     grid-template-columns: 1fr;
-                    gap: 3rem;
+                    gap: 4rem;
+                    align-items: center;
                 }
 
                 @media (min-width: 768px) {
-                    .footer-grid {
-                        grid-template-columns: 1fr 1fr 1fr 1fr;
+                    .about-grid {
+                        grid-template-columns: 1fr 1fr;
                     }
                 }
 
-                .footer-brand {
+                .about-image {
+                    position: relative;
+                }
+
+                .about-image-glow {
+                    position: absolute;
+                    inset: 0;
+                    background: radial-gradient(circle at 50% 50%, rgba(43, 189, 238, 0.2), transparent 70%);
+                    filter: blur(40px);
+                    z-index: 0;
+                }
+                
+                .about-card {
+                     position: relative;
+                     z-index: 1;
+                     background: rgba(255,255,255,0.03);
+                     border: 1px solid rgba(255,255,255,0.1);
+                     border-radius: 1.5rem;
+                     padding: 2rem;
+                     backdrop-filter: blur(12px);
+                }
+
+                /* Pricing Section */
+                .pricing-section {
+                    padding: 8rem 0;
+                    position: relative;
+                    background: #050505;
+                }
+
+                .pricing-grid {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    gap: 2rem;
+                    max-width: 80rem;
+                    margin: 0 auto;
+                }
+
+                @media (min-width: 1024px) {
+                    .pricing-grid {
+                        grid-template-columns: repeat(3, 1fr);
+                    }
+                }
+
+                .pricing-card {
+                    background: rgba(255, 255, 255, 0.02);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    border-radius: 1.5rem;
+                    padding: 2.5rem;
+                    display: flex;
+                    flex-direction: column;
+                    position: relative;
+                    transition: all 0.3s;
+                }
+
+                .pricing-card:hover {
+                    border-color: rgba(43, 189, 238, 0.3);
+                    background: rgba(255, 255, 255, 0.04);
+                    transform: translateY(-5px);
+                }
+                
+                .pricing-card.featured {
+                    border-color: #2bbdee;
+                    background: rgba(43, 189, 238, 0.05);
+                    box-shadow: 0 0 30px rgba(43, 189, 238, 0.1);
+                }
+
+                .pricing-header {
+                    margin-bottom: 2rem;
+                    text-align: center;
+                }
+
+                .pricing-name {
+                    font-size: 1.25rem;
+                    font-weight: 700;
+                    color: white;
+                    margin-bottom: 0.5rem;
+                }
+
+                .pricing-price {
+                    font-size: 3rem;
+                    font-weight: 900;
+                    color: white;
+                    line-height: 1;
+                }
+                
+                .pricing-period {
+                    font-size: 1rem;
+                    color: rgba(255,255,255,0.5);
+                    font-weight: 500;
+                }
+
+                .pricing-features {
+                    margin-bottom: 2.5rem;
+                    flex: 1;
+                    list-style: none;
+                    padding: 0;
+                }
+
+                .pricing-feature {
                     display: flex;
                     align-items: center;
                     gap: 0.75rem;
+                    margin-bottom: 1rem;
+                    color: rgba(255, 255, 255, 0.7);
+                    font-size: 0.9375rem;
+                }
+
+                .check-icon {
+                    color: #2bbdee;
+                    flex-shrink: 0;
+                }
+
+                /* Testimonials */
+                .testimonials-section {
+                    padding: 8rem 0;
+                    background: linear-gradient(to top, #050505, #080b10);
+                }
+
+                .testimonials-grid {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    gap: 2rem;
+                }
+
+                @media (min-width: 768px) {
+                    .testimonials-grid {
+                        grid-template-columns: repeat(3, 1fr);
+                    }
+                }
+
+                .testimonial-card {
+                    background: rgba(255, 255, 255, 0.02);
+                    border: 1px solid rgba(255, 255, 255, 0.08);
+                    border-radius: 1rem;
+                    padding: 2rem;
+                }
+
+                .testimonial-text {
+                    color: rgba(255, 255, 255, 0.8);
+                    font-size: 1rem;
+                    line-height: 1.6;
                     margin-bottom: 1.5rem;
+                    font-style: italic;
                 }
 
-                .footer-brand-icon {
-                    font-size: 1.5rem;
-                }
-
-                .footer-brand-text {
-                    font-size: 1.25rem;
-                    font-weight: 900;
-                    color: white;
-                }
-
-                .footer-brand-text span {
-                    color: #2bbdee;
-                }
-
-                .footer-desc {
-                    color: rgba(255, 255, 255, 0.4);
-                    font-size: 0.875rem;
-                    line-height: 1.75;
-                    max-width: 320px;
-                }
-
-                .footer-title {
-                    color: white;
-                    font-weight: 700;
-                    margin-bottom: 1.5rem;
-                }
-
-                .footer-links {
-                    list-style: none;
-                    padding: 0;
-                    margin: 0;
+                .testimonial-author {
                     display: flex;
-                    flex-direction: column;
-                    gap: 1rem;
-                }
-
-                .footer-links a {
-                    color: rgba(255, 255, 255, 0.5);
-                    font-size: 0.875rem;
-                    text-decoration: none;
-                    transition: color 0.2s;
-                }
-
-                .footer-links a:hover {
-                    color: #2bbdee;
-                }
-
-                .newsletter-input {
-                    display: flex;
-                    gap: 0.5rem;
-                }
-
-                .newsletter-input input {
-                    flex: 1;
-                    background: rgba(255, 255, 255, 0.05);
-                    border: 1px solid rgba(255, 255, 255, 0.1);
-                    border-radius: 0.5rem;
-                    padding: 0.5rem 1rem;
-                    font-size: 0.875rem;
-                    color: white;
-                    outline: none;
-                }
-
-                .newsletter-input input::placeholder {
-                    color: rgba(255, 255, 255, 0.4);
-                }
-
-                .newsletter-input input:focus {
-                    border-color: #2bbdee;
-                }
-
-                .newsletter-btn {
-                    background: rgba(43, 189, 238, 0.2);
-                    border: none;
-                    border-radius: 0.5rem;
-                    padding: 0.5rem;
-                    color: #2bbdee;
-                    font-size: 1.25rem;
-                    cursor: pointer;
-                    transition: background 0.2s;
-                }
-
-                .newsletter-btn:hover {
-                    background: rgba(43, 189, 238, 0.3);
-                }
-
-                .footer-bottom {
-                    max-width: 80rem;
-                    margin: 0 auto;
-                    padding: 2rem 1.5rem 0;
-                    margin-top: 5rem;
-                    border-top: 1px solid rgba(255, 255, 255, 0.05);
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: space-between;
                     align-items: center;
                     gap: 1rem;
                 }
 
-                @media (min-width: 768px) {
-                    .footer-bottom {
-                        flex-direction: row;
-                    }
+                .author-avatar {
+                    width: 3rem;
+                    height: 3rem;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.1);
                 }
 
-                .footer-copyright {
-                    color: rgba(255, 255, 255, 0.3);
-                    font-size: 0.75rem;
-                }
-
-                .footer-legal {
-                    display: flex;
-                    gap: 1.5rem;
-                }
-
-                .footer-legal a {
-                    color: rgba(255, 255, 255, 0.3);
-                    font-size: 0.75rem;
-                    text-decoration: none;
-                    transition: color 0.2s;
-                }
-
-                .footer-legal a:hover {
+                .author-info h4 {
                     color: white;
+                    font-weight: 600;
+                    font-size: 0.9375rem;
                 }
+
+                .author-info p {
+                    color: rgba(255, 255, 255, 0.5);
+                    font-size: 0.8125rem;
+                }
+
             `}</style>
 
-            {/* Background Effects */}
             <div className="bg-effects">
-                <div className="floating-blob blob-1" />
-                <div className="floating-blob blob-2" />
-                <div className="particle-mesh" />
+                <div className="floating-blob blob-1"></div>
+                <div className="floating-blob blob-2"></div>
+                <div className="particle-mesh"></div>
             </div>
 
             {/* Header */}
             <header className="header">
                 <div className="header-content">
                     <Link href="/" className="logo-wrapper">
-                        <Logo size="md" theme="dark" />
+                        <Logo className="w-8 h-8 text-[#2bbdee]" />
+                        <span className="text-xl font-bold tracking-tight text-white">ClareIA</span>
                     </Link>
 
                     <nav className="nav-links">
-                        <a href="#funcionalidades" className="nav-link">Funcionalidades</a>
-                        <a href="#sobre" className="nav-link">Sobre Nós</a>
-                        <a href="#precos" className="nav-link">Preços</a>
-                        <a href="#depoimentos" className="nav-link">Depoimentos</a>
+                        <Link href="#sobre" className="nav-link">Sobre</Link>
+                        <Link href="#features" className="nav-link">Recursos</Link>
+                        <Link href="#precos" className="nav-link">Preços</Link>
+                        <Link href="#depoimentos" className="nav-link">Depoimentos</Link>
                     </nav>
 
                     <div className="header-actions">
-                        <Link href="/login" className="btn-login">Login</Link>
-                        <button className="liquid-button">Agendar Demo</button>
+                        <Link href="/login" className="btn-login">Entrar</Link>
+                        <Link href="/register" className="liquid-button">Teste Grátis</Link>
                     </div>
                 </div>
             </header>
@@ -978,164 +1015,312 @@ export default function LandingPage() {
                 <div className="hero-content">
                     <div className="hero-text">
                         <div className="hero-badge">
-                            <span className="pulse-dot" />
-                            Inteligência Artificial de Próxima Geração
+                            <span className="pulse-dot"></span>
+                            <span>Novo: Módulo IA 2.0</span>
                         </div>
-
-                        <h2 className="hero-title">
-                            A Odontologia do Futuro, <span>Hoje</span>
-                        </h2>
-
+                        <h1 className="hero-title">
+                            O Futuro da <br />
+                            <span>Odontologia Digital</span>
+                        </h1>
                         <p className="hero-subtitle">
-                            Aumente sua produtividade e precisão com a plataforma SaaS líder em inteligência dental.
-                            Gestão clínica fluida como vidro, inteligente como IA.
+                            ClareIA é a plataforma completa que une gestão clínica, inteligência artificial e design premium para transformar seu consultório.
                         </p>
-
                         <div className="hero-buttons">
-                            <Link href="/login" className="landing-btn-primary">
-                                Começar Teste Grátis
+                            <Link href="/register" className="liquid-button" style={{ fontSize: '1.125rem', padding: '1rem 2.5rem' }}>
+                                Começar Agora
                             </Link>
-                            <button className="btn-secondary">Ver Funcionalidades</button>
+                            <Link href="#features" className="btn-secondary">
+                                Ver Recursos
+                            </Link>
                         </div>
                     </div>
 
-                    {/* Dashboard Mockup */}
                     <div className="mockup-container">
-                        <div className="dashboard-mockup">
-                            <div className="mockup-header">
-                                <div className="window-dots">
-                                    <div className="window-dot red" />
-                                    <div className="window-dot yellow" />
-                                    <div className="window-dot green" />
-                                </div>
-                                <div className="mockup-url">clareia-dashboard-v2.app</div>
-                            </div>
-                            <div className="mockup-content">
-                                {/* Sidebar Mini */}
-                                <div className="mockup-sidebar">
-                                    <div className="sidebar-icon" style={{ background: 'rgba(43,189,238,0.2)' }}>🦷</div>
-                                    <div className="sidebar-icon" style={{ background: 'rgba(43,189,238,0.1)', opacity: 0.5 }}>📊</div>
-                                    <div className="sidebar-icon" style={{ background: 'rgba(255,255,255,0.02)', opacity: 0.3 }}>📅</div>
-                                    <div className="sidebar-icon" style={{ background: 'rgba(255,255,255,0.02)', opacity: 0.3 }}>👥</div>
-                                </div>
-                                {/* Main Content */}
-                                <div className="mockup-main">
-                                    {/* Stats Row */}
-                                    <div className="stats-row">
-                                        <div className="stat-card">
-                                            <div className="stat-label">PACIENTES HOJE</div>
-                                            <div className="stat-value">24</div>
-                                            <div className="stat-change">↑ 12%</div>
-                                        </div>
-                                        <div className="stat-card">
-                                            <div className="stat-label">CONSULTAS</div>
-                                            <div className="stat-value">18</div>
-                                            <div className="stat-change">↑ 8%</div>
-                                        </div>
-                                        <div className="stat-card">
-                                            <div className="stat-label">RECEITA</div>
-                                            <div className="stat-value">R$ 8.4k</div>
-                                            <div className="stat-change">↑ 23%</div>
-                                        </div>
-                                        <div className="stat-card">
-                                            <div className="stat-label">TAXA DE RETORNO</div>
-                                            <div className="stat-value">94%</div>
-                                            <div className="stat-change" style={{ color: '#2bbdee' }}>Excelente</div>
-                                        </div>
-                                    </div>
-                                    {/* Chart Area */}
-                                    <div className="charts-row">
-                                        <div className="chart-card wide">
-                                            <div className="chart-title">📈 Atendimentos da Semana</div>
-                                            <div className="chart-bars">
-                                                {[40, 65, 45, 80, 55, 90, 70].map((h, i) => (
-                                                    <div
-                                                        key={i}
-                                                        className="chart-bar"
-                                                        style={{
-                                                            background: `linear-gradient(to top, #2bbdee, rgba(43,189,238,${0.3 + i * 0.1}))`,
-                                                            height: `${h}%`
-                                                        }}
-                                                    />
-                                                ))}
-                                            </div>
-                                        </div>
-                                        <div className="chart-card narrow">
-                                            <div className="chart-title">🦷 Procedimentos</div>
-                                            <div className="progress-list">
-                                                {[['Limpeza', 35], ['Restauração', 28], ['Canal', 18], ['Extração', 12]].map(([name, val], i) => (
-                                                    <div key={i} className="progress-item">
-                                                        <div className="progress-label">
-                                                            <span>{name}</span><span>{val}%</span>
-                                                        </div>
-                                                        <div className="progress-bar-bg">
-                                                            <div className="progress-bar-fill" style={{ width: `${val}%` }} />
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div className="stat-card-float">
+                            <div className="stat-icon">💰</div>
+                            <div>
+                                <div className="stat-float-label">Faturamento</div>
+                                <div className="stat-float-value">+ 142%</div>
                             </div>
                         </div>
 
-                        <div className="stat-card-float">
-                            <div className="stat-icon">📈</div>
-                            <div>
-                                <div className="stat-float-label">Precisão de Diagnóstico</div>
-                                <div className="stat-float-value">+98.4%</div>
+                        <div className="dashboard-mockup">
+                            <div className="mockup-header">
+                                <div className="window-dots">
+                                    <div className="window-dot red"></div>
+                                    <div className="window-dot yellow"></div>
+                                    <div className="window-dot green"></div>
+                                </div>
+                                <div className="mockup-url">clareia.app/dashboard</div>
                             </div>
+                            <div className="mockup-content">
+                                <div className="mockup-sidebar">
+                                    <div className="sidebar-icon" style={{ background: 'rgba(43, 189, 238, 0.2)' }}></div>
+                                    <div className="sidebar-icon" style={{ background: 'rgba(255, 255, 255, 0.05)' }}></div>
+                                    <div className="sidebar-icon" style={{ background: 'rgba(255, 255, 255, 0.05)' }}></div>
+                                </div>
+                                <div className="mockup-main">
+                                    <div className="stats-row">
+                                        <div className="stat-card">
+                                            <div className="stat-label">Pacientes Ativos</div>
+                                            <div className="stat-value">1,284</div>
+                                            <div className="stat-change">+12% este mês</div>
+                                        </div>
+                                        <div className="stat-card">
+                                            <div className="stat-label">Agendamentos</div>
+                                            <div className="stat-value">42</div>
+                                            <div className="stat-change text-[#67e8f9]">Hoje</div>
+                                        </div>
+                                        <div className="stat-card">
+                                            <div className="stat-label">Receita Estimada</div>
+                                            <div className="stat-value">R$ 48k</div>
+                                            <div className="stat-change">+8% vs anterior</div>
+                                        </div>
+                                    </div>
+                                    <div className="charts-row">
+                                        <div className="chart-card wide">
+                                            <div className="chart-title">Fluxo de Pacientes</div>
+                                            <div className="chart-bars">
+                                                <div className="chart-bar" style={{ height: '40%', background: '#1e293b' }}></div>
+                                                <div className="chart-bar" style={{ height: '60%', background: '#1e293b' }}></div>
+                                                <div className="chart-bar" style={{ height: '45%', background: '#1e293b' }}></div>
+                                                <div className="chart-bar" style={{ height: '75%', background: '#0ea5e9' }}></div>
+                                                <div className="chart-bar" style={{ height: '55%', background: '#1e293b' }}></div>
+                                                <div className="chart-bar" style={{ height: '85%', background: '#1e293b' }}></div>
+                                            </div>
+                                        </div>
+                                        <div className="chart-card narrow">
+                                            <div className="chart-title">Eficiência</div>
+                                            <div className="progress-list">
+                                                <div className="progress-item">
+                                                    <div className="progress-label"><span>Ocupação</span><span>85%</span></div>
+                                                    <div className="progress-bar-bg"><div className="progress-bar-fill" style={{ width: '85%' }}></div></div>
+                                                </div>
+                                                <div className="progress-item" style={{ marginTop: '1rem' }}>
+                                                    <div className="progress-label"><span>Retorno</span><span>92%</span></div>
+                                                    <div className="progress-bar-bg"><div className="progress-bar-fill" style={{ width: '92%', background: '#10b981' }}></div></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="mockup-gradient"></div>
                         </div>
                     </div>
                 </div>
             </section>
 
             {/* Social Proof */}
-            <div className="social-proof">
+            <section className="social-proof">
                 <div className="social-proof-content">
-                    <p className="social-proof-title">Parceiros de Confiança</p>
+                    <p className="social-proof-title">Confiada por mais de 500+ Clínicas Modernas</p>
                     <div className="logos-wrapper">
-                        <span className="logo-placeholder">🏥 Clínica Sorriso</span>
-                        <span className="logo-placeholder">🦷 DentalCare</span>
-                        <span className="logo-placeholder">⚕️ OdontoPlus</span>
-                        <span className="logo-placeholder">🏨 SmilePro</span>
-                        <span className="logo-placeholder">🌟 PremiumDent</span>
+                        <div className="logo-placeholder">DENTAL<span style={{ fontWeight: 900 }}>CORP</span></div>
+                        <div className="logo-placeholder">SMILE<span style={{ fontWeight: 900 }}>STUDIO</span></div>
+                        <div className="logo-placeholder">ORTHO<span style={{ fontWeight: 900 }}>TECH</span></div>
+                        <div className="logo-placeholder">NOVA<span style={{ fontWeight: 900 }}>ODONTO</span></div>
+                        <div className="logo-placeholder">LUMI<span style={{ fontWeight: 900 }}>SMILE</span></div>
                     </div>
                 </div>
-            </div>
+            </section>
+
+            {/* About Section */}
+            <section className="about-section" id="sobre">
+                <div className="features-content">
+                    <div className="about-grid">
+                        <div>
+                            <div className="hero-badge" style={{ background: 'rgba(16, 185, 129, 0.1)', color: '#34d399', borderColor: 'rgba(16, 185, 129, 0.2)' }}>
+                                <span className="pulse-dot" style={{ background: '#34d399' }}></span>
+                                <span>Nossa Missão</span>
+                            </div>
+                            <h2 className="features-title">Design Líquido &<br />Inteligência Real.</h2>
+                            <div className="features-subtitle" style={{ marginBottom: '2rem' }}>
+                                <p style={{ marginBottom: '1rem' }}>
+                                    A ClareIA nasceu da frustração com softwares odontológicos "feios" e complexos. Acreditamos que a ferramenta que você usa todo dia deve ser inspiradora.
+                                </p>
+                                <p>
+                                    Combinamos a estética "Liquid Glass" com poderosos algoritmos de IA para criar uma experiência que não apenas organiza sua clínica, mas a eleva para o próximo nível de eficiência e beleza.
+                                </p>
+                            </div>
+                            <ul style={{ display: 'flex', flexDirection: 'column', gap: '1rem', color: 'rgba(255,255,255,0.7)' }}>
+                                <li style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                    <span style={{ color: '#2bbdee' }}>✓</span> Foco total na experiência do usuário (UX)
+                                </li>
+                                <li style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                    <span style={{ color: '#2bbdee' }}>✓</span> Arquitetura segura e escalável
+                                </li>
+                                <li style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                    <span style={{ color: '#2bbdee' }}>✓</span> Atualizações constantes baseadas em feedback
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="about-image">
+                            <div className="about-image-glow"></div>
+                            <div className="about-card">
+                                <div style={{ background: 'rgba(0,0,0,0.5)', borderRadius: '1rem', padding: '1.5rem' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                                        <div style={{ height: '10px', width: '40%', background: 'rgba(255,255,255,0.1)', borderRadius: '5px' }}></div>
+                                        <div style={{ height: '10px', width: '20%', background: 'rgba(255,255,255,0.1)', borderRadius: '5px' }}></div>
+                                    </div>
+                                    <div style={{ height: '150px', background: 'rgba(255,255,255,0.05)', borderRadius: '0.5rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <span style={{ color: 'rgba(255,255,255,0.2)' }}>Interface Limpa</span>
+                                    </div>
+                                    <div style={{ display: 'flex', gap: '1rem' }}>
+                                        <div style={{ height: '40px', flex: 1, background: '#2bbdee', borderRadius: '0.5rem', opacity: 0.8 }}></div>
+                                        <div style={{ height: '40px', flex: 1, background: 'rgba(255,255,255,0.1)', borderRadius: '0.5rem' }}></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
             {/* Features Section */}
-            <section className="features" id="funcionalidades">
+            <section className="features" id="features">
                 <div className="features-content">
                     <div className="features-header">
-                        <h3 className="features-title">Recursos Inteligentes</h3>
-                        <p className="features-subtitle">Uma experiência fluida projetada para o profissional moderno.</p>
+                        <h2 className="features-title">Poderoso. Simples.<br />Essencial.</h2>
+                        <p className="features-subtitle">Tudo o que você precisa para gerenciar sua clínica em um único lugar, com uma interface que você vai amar usar.</p>
                     </div>
 
                     <div className="features-grid">
                         <div className="feature-card">
                             <div className="feature-icon">📅</div>
-                            <h4 className="feature-title">Agenda Inteligente</h4>
-                            <p className="feature-desc">
-                                Otimização de horários via IA, reduzindo faltas em até 40% com lembretes automatizados e fluidos.
-                            </p>
+                            <h3 className="feature-title">Agenda Inteligente</h3>
+                            <p className="feature-desc">Organize seus atendimentos com drag-and-drop, confirmações automáticas e gestão de filas de espera.</p>
+                        </div>
+                        <div className="feature-card">
+                            <div className="feature-icon">🦷</div>
+                            <h3 className="feature-title">Odontograma 3D</h3>
+                            <p className="feature-desc">Visualize tratamentos com nosso odontograma interativo e gere orçamentos precisos em segundos.</p>
+                        </div>
+                        <div className="feature-card">
+                            <div className="feature-icon">🤖</div>
+                            <h3 className="feature-title">IA Assistente</h3>
+                            <p className="feature-desc">Nossa IA analisa padrões, sugere tratamentos e ajuda a preencher prontuários automaticamente.</p>
+                        </div>
+                        <div className="feature-card">
+                            <div className="feature-icon">💰</div>
+                            <h3 className="feature-title">Gestão Financeira</h3>
+                            <p className="feature-desc">Controle de caixa, fluxo financeiro, repasse de comissões e emissão de boletos integrados.</p>
+                        </div>
+                        <div className="feature-card">
+                            <div className="feature-icon">📱</div>
+                            <h3 className="feature-title">App do Paciente</h3>
+                            <p className="feature-desc">Seus pacientes podem agendar, ver tratamentos e pagar diretamente pelo aplicativo exclusivo.</p>
+                        </div>
+                        <div className="feature-card">
+                            <div className="feature-icon">🔒</div>
+                            <h3 className="feature-title">Segurança Total</h3>
+                            <p className="feature-desc">Dados criptografados, backups diários e conformidade total com a LGPD para sua tranquilidade.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Pricing Section */}
+            <section className="pricing-section" id="precos">
+                <div className="features-content">
+                    <div className="features-header" style={{ textAlign: 'center', marginBottom: '4rem' }}>
+                        <h2 className="features-title">Planos Transparentes</h2>
+                        <p className="features-subtitle" style={{ margin: '0 auto' }}>Escolha a melhor opção para o estágio atual da sua clínica. Sem contratos de fidelidade.</p>
+                    </div>
+
+                    <div className="pricing-grid">
+                        {/* Essential */}
+                        <div className="pricing-card">
+                            <div className="pricing-header">
+                                <h3 className="pricing-name">Essencial</h3>
+                                <div className="pricing-price">R$ 99<span style={{ fontSize: '1.5rem' }}>,90</span></div>
+                                <span className="pricing-period">/mês</span>
+                            </div>
+                            <ul className="pricing-features">
+                                <li className="pricing-feature"><span className="check-icon">✓</span> 1 Dentista</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Lembretes por E-mail</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Agenda Básica</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Prontuário Digital</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> App do Paciente</li>
+                            </ul>
+                            <Link href="/register?plan=essential" className="btn-secondary" style={{ width: '100%', textAlign: 'center', fontSize: '1rem' }}>Começar Grátis</Link>
                         </div>
 
-                        <div className="feature-card">
-                            <div className="feature-icon">📋</div>
-                            <h4 className="feature-title">Prontuário Digital</h4>
-                            <p className="feature-desc">
-                                Histórico completo com visualização 3D e integração radiológica imediata em uma interface de vidro.
-                            </p>
+                        {/* Professional */}
+                        <div className="pricing-card featured">
+                            <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translate(-50%, -50%)', background: '#2bbdee', color: 'black', padding: '0.25rem 1rem', borderRadius: '50px', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase' }}>Mais Popular</div>
+                            <div className="pricing-header">
+                                <h3 className="pricing-name">Profissional</h3>
+                                <div className="pricing-price">R$ 199<span style={{ fontSize: '1.5rem' }}>,90</span></div>
+                                <span className="pricing-period">/mês</span>
+                            </div>
+                            <ul className="pricing-features">
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Até 8 Dentistas</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Lembretes via App</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Módulo Protético</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Dashboard IA Avançado</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Financeiro Completo</li>
+                            </ul>
+                            <Link href="/register?plan=professional" className="liquid-button" style={{ width: '100%', textAlign: 'center', fontSize: '1rem' }}>Assinar Agora</Link>
                         </div>
 
-                        <div className="feature-card">
-                            <div className="feature-icon">📊</div>
-                            <h4 className="feature-title">Dashboards em Tempo Real</h4>
-                            <p className="feature-desc">
-                                Visualize a saúde financeira e operacional da sua clínica com gráficos dinâmicos e intuitivos.
-                            </p>
+                        {/* Enterprise */}
+                        <div className="pricing-card">
+                            <div className="pricing-header">
+                                <h3 className="pricing-name">Enterprise</h3>
+                                <div className="pricing-price">R$ 349<span style={{ fontSize: '1.5rem' }}>,90</span></div>
+                                <span className="pricing-period">/mês base + extras</span>
+                            </div>
+                            <ul className="pricing-features">
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Dentistas Ilimitados</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Multi-Clínicas</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Teleconsulta HD</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Controle de Estoque</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Suporte Prioritário 24/7</li>
+                            </ul>
+                            <Link href="/register?plan=enterprise" className="btn-secondary" style={{ width: '100%', textAlign: 'center', fontSize: '1rem' }}>Falar com Vendas</Link>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Testimonials */}
+            <section className="testimonials-section" id="depoimentos">
+                <div className="features-content">
+                    <div className="features-header" style={{ textAlign: 'center' }}>
+                        <h2 className="features-title">O que dizem sobre nós</h2>
+                    </div>
+
+                    <div className="testimonials-grid">
+                        <div className="testimonial-card">
+                            <p className="testimonial-text">"A ClareIA mudou completamente a forma como gerencio minha clínica. O design é lindo e os pacientes sempre elogiam a facilidade do agendamento online."</p>
+                            <div className="testimonial-author">
+                                <div className="author-avatar" style={{ background: 'linear-gradient(135deg, #fca5a5, #ef4444)' }}></div>
+                                <div className="author-info">
+                                    <h4>Dra. Ana Clara</h4>
+                                    <p>Ortodontista</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="testimonial-card">
+                            <p className="testimonial-text">"Sair do papel para a ClareIA foi a melhor decisão de 2025. O módulo financeiro me fez economizar horas de contabilidade todo mês."</p>
+                            <div className="testimonial-author">
+                                <div className="author-avatar" style={{ background: 'linear-gradient(135deg, #86efac, #22c55e)' }}></div>
+                                <div className="author-info">
+                                    <h4>Dr. Marcos Silva</h4>
+                                    <p>Implantodontista</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="testimonial-card">
+                            <p className="testimonial-text">"A funcionalidade de IA para prever faltas reduziu nosso no-show em 40%. É impressionante como o sistema 'pensa' com a gente."</p>
+                            <div className="testimonial-author">
+                                <div className="author-avatar" style={{ background: 'linear-gradient(135deg, #93c5fd, #3b82f6)' }}></div>
+                                <div className="author-info">
+                                    <h4>Clínica OdontoMaster</h4>
+                                    <p>Rede de Clínicas</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1144,20 +1329,19 @@ export default function LandingPage() {
             {/* CTA Section */}
             <section className="cta-section">
                 <div className="cta-card">
-                    <div className="cta-glow" />
+                    <div className="cta-glow"></div>
                     <div className="cta-content">
-                        <h3 className="cta-title">Transforme sua clínica agora.</h3>
-                        <p className="cta-subtitle">
-                            Junte-se a mais de 2.000 dentistas que já modernizaram suas rotinas com ClareIA.
-                            Comece hoje mesmo seu período de teste.
-                        </p>
+                        <h2 className="cta-title">Pronto para transformar<br />seu consultório?</h2>
+                        <p className="cta-subtitle">Junte-se a centenas de dentistas que já modernizaram suas clínicas com a ClareIA.</p>
                         <div className="cta-buttons">
-                            <Link href="/login" className="landing-cta-btn-primary">
-                                Iniciar Teste Gratuito
+                            <Link href="/register" className="liquid-button" style={{ fontSize: '1.25rem', padding: '1.25rem 3rem' }}>
+                                Começar Teste Grátis
                             </Link>
-                            <button className="cta-btn-secondary">Falar com Consultor</button>
+                            <Link href="/demo" className="cta-btn-secondary">
+                                Agendar Demonstração
+                            </Link>
                         </div>
-                        <p className="cta-note">Não requer cartão de crédito • 14 dias grátis</p>
+                        <p className="cta-note">Sem cartão de crédito • Cancele quando quiser</p>
                     </div>
                 </div>
             </section>
@@ -1165,60 +1349,14 @@ export default function LandingPage() {
             {/* Footer */}
             <footer className="footer">
                 <div className="footer-content">
-                    <div className="footer-grid">
-                        <div>
-                            <div className="footer-brand">
-                                <img src="/logo-v2.png" alt="ClareIA" height={56} className="h-14 w-auto" />
-                            </div>
-                            <p className="footer-desc">
-                                Elevando o padrão da odontologia global através da inovação digital e inteligência artificial de ponta.
-                            </p>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', alignItems: 'center', textAlign: 'center' }}>
+                        <div className="logo-wrapper">
+                            <Logo className="w-6 h-6 text-slate-600" />
+                            <span className="text-lg font-bold text-slate-600">ClareIA</span>
                         </div>
-
-                        <div>
-                            <h5 className="footer-title">Plataforma</h5>
-                            <ul className="footer-links">
-                                <li><a href="#">Funcionalidades</a></li>
-                                <li><a href="#">Integrações</a></li>
-                                <li><a href="#">Segurança</a></li>
-                                <li><a href="#">Roadmap</a></li>
-                            </ul>
-                        </div>
-
-                        <div>
-                            <h5 className="footer-title">Empresa</h5>
-                            <ul className="footer-links">
-                                <li><a href="#">Sobre Nós</a></li>
-                                <li><a href="#">Carreiras</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">Contato</a></li>
-                            </ul>
-                        </div>
-
-                        <div>
-                            <h5 className="footer-title">Newsletter</h5>
-                            <p className="footer-desc" style={{ marginBottom: '1rem' }}>
-                                Receba insights sobre o futuro da odontologia.
-                            </p>
-                            <div className="newsletter-input">
-                                <input
-                                    type="email"
-                                    placeholder="Seu e-mail"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
-                                <button className="newsletter-btn">➤</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="footer-bottom">
-                    <p className="footer-copyright">© 2026 ClareIA. Todos os direitos reservados.</p>
-                    <div className="footer-legal">
-                        <a href="#">Privacidade</a>
-                        <a href="#">Termos de Uso</a>
-                        <a href="#">Cookies</a>
+                        <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.875rem' }}>
+                            © 2024 ClareIA Tecnologia Ltda. Todos os direitos reservados.
+                        </p>
                     </div>
                 </div>
             </footer>

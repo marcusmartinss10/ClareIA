@@ -310,6 +310,9 @@ export default function LandingPage() {
                     cursor: pointer;
                     transition: all 0.3s ease;
                     text-decoration: none;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
                 }
 
                 .btn-primary:hover {
@@ -812,6 +815,9 @@ export default function LandingPage() {
                     cursor: pointer;
                     transition: all 0.3s ease;
                     text-decoration: none;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
                 }
 
                 .cta-btn-primary:hover {

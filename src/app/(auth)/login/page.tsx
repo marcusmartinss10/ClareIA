@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Logo from '@/components/Logo';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -141,7 +142,6 @@ export default function LoginPage() {
                     50% { transform: translateY(-10px); }
                 }
 
-                /* Logo Header */
                 .logo-header {
                     display: flex;
                     flex-direction: column;
@@ -149,38 +149,6 @@ export default function LoginPage() {
                     margin-bottom: 2.5rem;
                 }
 
-                .logo-icon-wrapper {
-                    position: relative;
-                    margin-bottom: 1rem;
-                    cursor: pointer;
-                }
-
-                .logo-icon {
-                    width: 4rem;
-                    height: 4rem;
-                    border-radius: 0.75rem;
-                    background: linear-gradient(to bottom right, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    border: 1px solid rgba(255, 255, 255, 0.1);
-                    box-shadow: 0 0 15px rgba(43, 189, 238, 0.3);
-                    font-size: 2rem;
-                }
-
-                .logo-glow {
-                    position: absolute;
-                    inset: 0;
-                    background: rgba(43, 189, 238, 0.2);
-                    filter: blur(20px);
-                    border-radius: 50%;
-                    z-index: -1;
-                    transition: all 0.5s;
-                }
-
-                .logo-icon-wrapper:hover .logo-glow {
-                    background: rgba(43, 189, 238, 0.4);
-                }
 
                 .logo-title {
                     font-size: 1.875rem;
@@ -415,7 +383,7 @@ export default function LoginPage() {
         <div className="glass-card">
           {/* Logo Header */}
           <div className="logo-header">
-            <img src="/logo-v2.png" alt="ClareIA" height={112} className="h-28 w-auto mb-4" />
+            <Logo size="xl" theme="dark" />
             <p className="logo-subtitle">Inteligência Dental de Precisão</p>
           </div>
 

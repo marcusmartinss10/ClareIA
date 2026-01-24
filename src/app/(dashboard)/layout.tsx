@@ -145,7 +145,9 @@ export default function DashboardLayout({
           }
         `}</style>
         <div className="loading-content">
-          <div className="loading-logo">ClareIA</div>
+          <div className="loading-logo">
+            <img src="/logo-full.png" alt="ClareIA" height={60} className="h-16 w-auto" />
+          </div>
           <div className="spinner" />
         </div>
       </div>
@@ -591,12 +593,8 @@ export default function DashboardLayout({
       {/* Sidebar */}
       <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
-          <div className="logo-wrapper">
-            <div className="logo-icon">🦷</div>
-            <div className="logo-text-wrapper">
-              <h1 className="logo-text">ClareIA</h1>
-              <span className="logo-subtitle">Dental Suite</span>
-            </div>
+          <div className="logo-wrapper justify-center">
+            <img src="/logo-full.png" alt="ClareIA" height={40} className="h-10 w-auto" />
           </div>
         </div>
 

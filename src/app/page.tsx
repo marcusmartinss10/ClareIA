@@ -977,8 +977,7 @@ export default function LandingPage() {
             <header className="header">
                 <div className="header-content">
                     <div className="logo-wrapper">
-                        <div className="logo-icon">🦷</div>
-                        <h1 className="logo-text">Clare<span>IA</span></h1>
+                        <img src="/logo-full.png" alt="ClareIA" height={40} className="h-10 w-auto" />
                     </div>
 
                     <nav className="nav-links">
@@ -1190,8 +1189,7 @@ export default function LandingPage() {
                     <div className="footer-grid">
                         <div>
                             <div className="footer-brand">
-                                <span className="footer-brand-icon">🦷</span>
-                                <span className="footer-brand-text">Clare<span>IA</span></span>
+                                <img src="/logo-full.png" alt="ClareIA" height={40} className="h-10 w-auto" />
                             </div>
                             <p className="footer-desc">
                                 Elevando o padrão da odontologia global através da inovação digital e inteligência artificial de ponta.

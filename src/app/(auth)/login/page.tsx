@@ -415,11 +415,7 @@ export default function LoginPage() {
         <div className="glass-card">
           {/* Logo Header */}
           <div className="logo-header">
-            <div className="logo-icon-wrapper">
-              <div className="logo-icon">🦷</div>
-              <div className="logo-glow" />
-            </div>
-            <h1 className="logo-title">ClareIA</h1>
+            <img src="/logo-full.png" alt="ClareIA" height={80} className="h-20 w-auto mb-4" />
             <p className="logo-subtitle">Inteligência Dental de Precisão</p>
           </div>
 

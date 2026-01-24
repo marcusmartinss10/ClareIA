@@ -351,8 +351,7 @@ export default function MarketingLayout({
             <header className="site-header">
                 <div className="header-container">
                     <Link href="/" className="logo-link">
-                        <div className="logo-icon">🦷</div>
-                        <span className="logo-text">Clare<span>IA</span></span>
+                        <img src="/logo-full.png" alt="ClareIA" height={40} className="h-10 w-auto" />
                     </Link>
 
                     <nav className="nav-desktop">
@@ -403,8 +402,7 @@ export default function MarketingLayout({
                     <div className="footer-grid">
                         <div>
                             <div className="footer-brand">
-                                <span className="footer-brand-icon">🦷</span>
-                                <span className="footer-brand-text">Clare<span>IA</span></span>
+                                <img src="/logo-full.png" alt="ClareIA" height={40} className="h-10 w-auto" />
                             </div>
                             <p className="footer-desc">
                                 A plataforma de gestão odontológica que traz clareza,

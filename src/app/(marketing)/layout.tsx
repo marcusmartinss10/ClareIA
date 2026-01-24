@@ -127,24 +127,7 @@ export default function MarketingLayout({
                     color: #2563EB;
                 }
 
-                .btn-cta {
-                    background: linear-gradient(135deg, #2563EB, #0EA5E9);
-                    color: white;
-                    font-size: 0.875rem;
-                    font-weight: 600;
-                    padding: 0.625rem 1.25rem;
-                    border: none;
-                    border-radius: 0.5rem;
-                    cursor: pointer;
-                    transition: all 0.2s;
-                    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
-                    text-decoration: none;
-                }
 
-                .btn-cta:hover {
-                    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
-                    transform: translateY(-1px);
-                }
 
                 .mobile-menu-btn {
                     display: flex;
@@ -347,7 +330,7 @@ export default function MarketingLayout({
 
                     <div className="header-actions">
                         <Link href="/login" className="btn-login">Entrar</Link>
-                        <Link href="/login" className="btn-cta">Teste Grátis</Link>
+                        <Link href="/login" className="btn btn-primary">Teste Grátis</Link>
                         <button
                             className="mobile-menu-btn"
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

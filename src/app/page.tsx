@@ -138,51 +138,6 @@ export default function LandingPage() {
                     color: #2bbdee;
                 }
 
-                .liquid-button {
-                    background: linear-gradient(135deg, #2bbdee 0%, #0ea5e9 50%, #0284c7 100%);
-                    box-shadow: 
-                        0 4px 15px rgba(43, 189, 238, 0.3),
-                        inset 0 1px 1px rgba(255, 255, 255, 0.4),
-                        inset 0 -2px 5px rgba(0, 0, 0, 0.1);
-                    border: none;
-                    border-radius: 0.5rem;
-                    padding: 0.625rem 1.5rem;
-                    color: white;
-                    font-size: 0.875rem;
-                    font-weight: 600;
-                    letter-spacing: 0.05em;
-                    text-transform: uppercase;
-                    cursor: pointer;
-                    transition: all 0.2s;
-                    text-decoration: none;
-                    position: relative;
-                    overflow: hidden;
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                }
-
-                .liquid-button::after {
-                    content: '';
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
-                    opacity: 0;
-                    transition: opacity 0.2s;
-                }
-
-                .liquid-button:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 6px 20px rgba(43, 189, 238, 0.4);
-                }
-
-                .liquid-button:hover::after {
-                    opacity: 1;
-                }
-
                 /* Hero Section */
                 .hero {
                     position: relative;
@@ -307,51 +262,6 @@ export default function LandingPage() {
                     backdrop-filter: blur(12px);
                     border: 1px solid rgba(255, 255, 255, 0.1);
                     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-                }
-
-                .btn-secondary {
-                    background: linear-gradient(135deg, #2bbdee 0%, #0ea5e9 50%, #0284c7 100%);
-                    box-shadow: 
-                        0 4px 15px rgba(43, 189, 238, 0.3),
-                        inset 0 1px 1px rgba(255, 255, 255, 0.4),
-                        inset 0 -2px 5px rgba(0, 0, 0, 0.1);
-                    border: none;
-                    border-radius: 0.5rem;
-                    padding: 1.25rem 2.5rem;
-                    color: white;
-                    font-size: 1.125rem;
-                    font-weight: 600;
-                    letter-spacing: 0.05em;
-                    text-transform: uppercase;
-                    cursor: pointer;
-                    transition: all 0.2s;
-                    text-decoration: none;
-                    position: relative;
-                    overflow: hidden;
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                }
-
-                .btn-secondary::after {
-                    content: '';
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
-                    opacity: 0;
-                    transition: opacity 0.2s;
-                }
-
-                .btn-secondary:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 6px 20px rgba(43, 189, 238, 0.4);
-                }
-
-                .btn-secondary:hover::after {
-                    opacity: 1;
                 }
 
                 /* Dashboard Mockup */
@@ -808,50 +718,7 @@ export default function LandingPage() {
                     }
                 }
 
-                .cta-btn-secondary {
-                    background: linear-gradient(135deg, #2bbdee 0%, #0ea5e9 50%, #0284c7 100%);
-                    box-shadow: 
-                        0 4px 15px rgba(43, 189, 238, 0.3),
-                        inset 0 1px 1px rgba(255, 255, 255, 0.4),
-                        inset 0 -2px 5px rgba(0, 0, 0, 0.1);
-                    border: none;
-                    border-radius: 0.5rem;
-                    padding: 1.25rem 3rem;
-                    color: white;
-                    font-size: 1.25rem;
-                    font-weight: 600;
-                    letter-spacing: 0.05em;
-                    text-transform: uppercase;
-                    cursor: pointer;
-                    transition: all 0.2s;
-                    text-decoration: none;
-                    position: relative;
-                    overflow: hidden;
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                }
 
-                .cta-btn-secondary::after {
-                    content: '';
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
-                    opacity: 0;
-                    transition: opacity 0.2s;
-                }
-
-                .cta-btn-secondary:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 6px 20px rgba(43, 189, 238, 0.4);
-                }
-
-                .cta-btn-secondary:hover::after {
-                    opacity: 1;
-                }
 
                 .cta-note {
                     margin-top: 2rem;
@@ -1085,7 +952,7 @@ export default function LandingPage() {
 
                     <div className="header-actions">
                         <Link href="/login" className="btn-login">Entrar</Link>
-                        <Link href="/register" className="liquid-button">Teste Grátis</Link>
+                        <Link href="/login" className="btn btn-primary">Começar Agora</Link>
                     </div>
                 </div>
             </header>
@@ -1106,11 +973,8 @@ export default function LandingPage() {
                             ClareIA é a plataforma completa que une gestão clínica, inteligência artificial e design premium para transformar seu consultório.
                         </p>
                         <div className="hero-buttons">
-                            <Link href="/register" className="liquid-button" style={{ fontSize: '1.125rem', padding: '1rem 2.5rem' }}>
-                                Começar Agora
-                            </Link>
-                            <Link href="#features" className="btn-secondary">
-                                Ver Recursos
+                            <Link href="/login" className="btn btn-primary" style={{ padding: '1.25rem 2.5rem', fontSize: '1.125rem' }}>
+                                Começar Gratuitamente
                             </Link>
                         </div>
                     </div>
@@ -1326,7 +1190,7 @@ export default function LandingPage() {
                                 <li className="pricing-feature"><span className="check-icon">✓</span> Backup Diário Automático</li>
                             </ul>
                             <div style={{ marginTop: 'auto' }}>
-                                <Link href="/register?plan=essential" className="btn-secondary" style={{ width: '100%', textAlign: 'center', fontSize: '1rem', display: 'block' }}>Começar Agora</Link>
+                                <Link href="/register?plan=essential" className="btn btn-primary" style={{ width: '100%', textAlign: 'center', fontSize: '1rem', display: 'block' }}>Começar Agora</Link>
                             </div>
                         </div>
 
@@ -1371,7 +1235,7 @@ export default function LandingPage() {
                                 <li className="pricing-feature"><span className="check-icon">✓</span> Suporte Prioritário 24/7</li>
                             </ul>
                             <div style={{ marginTop: 'auto' }}>
-                                <Link href="/register?plan=enterprise" className="btn-secondary" style={{ width: '100%', textAlign: 'center', fontSize: '1rem', display: 'block' }}>Falar com Vendas</Link>
+                                <Link href="/register?plan=enterprise" className="btn btn-primary" style={{ width: '100%', textAlign: 'center', fontSize: '1rem', display: 'block' }}>Falar com Vendas</Link>
                             </div>
                         </div>
                     </div>
@@ -1428,11 +1292,8 @@ export default function LandingPage() {
                         <h2 className="cta-title">Pronto para transformar<br />seu consultório?</h2>
                         <p className="cta-subtitle">Junte-se a centenas de dentistas que já modernizaram suas clínicas com a ClareIA.</p>
                         <div className="cta-buttons">
-                            <Link href="/register" className="liquid-button" style={{ fontSize: '1.25rem', padding: '1.25rem 3rem' }}>
-                                Começar Teste Grátis
-                            </Link>
-                            <Link href="/demo" className="cta-btn-secondary">
-                                Agendar Demonstração
+                            <Link href="/login" className="btn btn-primary" style={{ padding: '1.25rem 3rem', fontSize: '1.25rem' }}>
+                                Começar Grátis
                             </Link>
                         </div>
                         <p className="cta-note">Sem cartão de crédito • Cancele quando quiser</p>

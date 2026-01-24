@@ -235,52 +235,6 @@ export default function ForgotPasswordPage() {
                     color: #f87171;
                 }
 
-                /* Submit Button */
-                .liquid-button {
-                    width: 100%;
-                    padding: 1rem;
-                    background: linear-gradient(135deg, #2bbdee 0%, #0ea5e9 50%, #0284c7 100%);
-                    border: none;
-                    border-radius: 0.5rem;
-                    color: white;
-                    font-weight: 600;
-                    font-size: 0.875rem;
-                    text-transform: uppercase;
-                    letter-spacing: 0.05em;
-                    cursor: pointer;
-                    position: relative;
-                    overflow: hidden;
-                    box-shadow: 
-                        0 4px 15px rgba(43, 189, 238, 0.3),
-                        inset 0 1px 1px rgba(255, 255, 255, 0.4),
-                        inset 0 -2px 5px rgba(0, 0, 0, 0.1);
-                    transition: all 0.2s;
-                }
-
-                .liquid-button::after {
-                    content: '';
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: linear-gradient(rgba(255,255,255,0.2), transparent);
-                    pointer-events: none;
-                }
-
-                .liquid-button:hover {
-                    filter: brightness(1.1);
-                }
-
-                .liquid-button:active {
-                    transform: scale(0.98);
-                }
-
-                .liquid-button:disabled {
-                    opacity: 0.7;
-                    cursor: not-allowed;
-                }
-
                 /* Back Link */
                 .back-link {
                     margin-top: 1.5rem;
@@ -355,7 +309,8 @@ export default function ForgotPasswordPage() {
 
                         <button
                             type="submit"
-                            className="liquid-button"
+                            className="btn btn-primary"
+                            style={{ width: '100%', padding: '1rem' }}
                             disabled={loading}
                         >
                             {loading ? 'Enviando...' : 'Enviar Instruções'}

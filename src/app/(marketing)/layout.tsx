@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import Logo from '@/components/Logo';
 
 const navLinks = [
     { href: '/funcionalidades', label: 'Funcionalidades' },
@@ -54,28 +55,6 @@ export default function MarketingLayout({
                     align-items: center;
                     gap: 0.625rem;
                     text-decoration: none;
-                }
-
-                .logo-icon {
-                    width: 2.25rem;
-                    height: 2.25rem;
-                    background: linear-gradient(135deg, #2563EB, #0EA5E9);
-                    border-radius: 0.5rem;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 1.25rem;
-                }
-
-                .logo-text {
-                    font-size: 1.375rem;
-                    font-weight: 800;
-                    color: #1E293B;
-                    letter-spacing: -0.03em;
-                }
-
-                .logo-text span {
-                    color: #2563EB;
                 }
 
                 .nav-desktop {
@@ -351,7 +330,7 @@ export default function MarketingLayout({
             <header className="site-header">
                 <div className="header-container">
                     <Link href="/" className="logo-link">
-                        <img src="/logo-full.png" alt="ClareIA" height={40} className="h-10 w-auto" />
+                        <Logo size="md" theme="light" />
                     </Link>
 
                     <nav className="nav-desktop">
@@ -402,7 +381,7 @@ export default function MarketingLayout({
                     <div className="footer-grid">
                         <div>
                             <div className="footer-brand">
-                                <img src="/logo-full.png" alt="ClareIA" height={40} className="h-10 w-auto" />
+                                <Logo size="lg" theme="dark" />
                             </div>
                             <p className="footer-desc">
                                 A plataforma de gestão odontológica que traz clareza,

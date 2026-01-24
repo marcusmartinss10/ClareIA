@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { ToastProvider } from '@/components/Toast';
+import Logo from '@/components/Logo';
 
 interface User {
   id: string;
@@ -146,7 +147,7 @@ export default function DashboardLayout({
         `}</style>
         <div className="loading-content">
           <div className="loading-logo">
-            <img src="/logo-full.png" alt="ClareIA" height={60} className="h-16 w-auto" />
+            <img src="/logo-v2.png" alt="ClareIA" height={80} className="h-20 w-auto" />
           </div>
           <div className="spinner" />
         </div>
@@ -195,52 +196,11 @@ export default function DashboardLayout({
           align-items: center;
           gap: 0.875rem;
           cursor: pointer;
-        }
-
-        .logo-wrapper:hover .logo-icon {
-          transform: scale(1.1);
+          text-decoration: none;
         }
 
         .logo-wrapper:hover .logo-text {
           color: #22d3ee;
-        }
-
-        .logo-icon {
-          width: 2.75rem;
-          height: 2.75rem;
-          border-radius: 1rem;
-          background: linear-gradient(135deg, #06b6d4, #3b82f6);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 1.5rem;
-          color: white;
-          box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          transition: transform 0.3s ease;
-        }
-
-        .logo-text-wrapper {
-          display: flex;
-          flex-direction: column;
-        }
-
-        .logo-text {
-          font-size: 1.25rem;
-          font-weight: 700;
-          color: white;
-          letter-spacing: -0.02em;
-          transition: color 0.3s ease;
-          text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .logo-subtitle {
-          font-size: 0.625rem;
-          font-weight: 500;
-          color: #64748b;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-          margin-top: 0.125rem;
         }
 
         .sidebar-nav {
@@ -593,9 +553,9 @@ export default function DashboardLayout({
       {/* Sidebar */}
       <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
-          <div className="logo-wrapper justify-center">
-            <img src="/logo-full.png" alt="ClareIA" height={40} className="h-10 w-auto" />
-          </div>
+          <Link href="/dashboard" className="logo-wrapper justify-center">
+            <Logo size="md" theme="dark" showText={true} />
+          </Link>
         </div>
 
         <nav className="sidebar-nav">

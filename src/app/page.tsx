@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import Logo from '@/components/Logo';
 
 export default function LandingPage() {
     const [email, setEmail] = useState('');
@@ -82,29 +83,7 @@ export default function LandingPage() {
                     display: flex;
                     align-items: center;
                     gap: 0.75rem;
-                }
-
-                .logo-icon {
-                    width: 2.5rem;
-                    height: 2.5rem;
-                    background: rgba(43, 189, 238, 0.2);
-                    border-radius: 0.5rem;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    border: 1px solid rgba(43, 189, 238, 0.3);
-                    font-size: 1.5rem;
-                }
-
-                .logo-text {
-                    font-size: 1.5rem;
-                    font-weight: 900;
-                    letter-spacing: -0.05em;
-                    color: white;
-                }
-
-                .logo-text span {
-                    color: #2bbdee;
+                    text-decoration: none;
                 }
 
                 .nav-links {
@@ -976,9 +955,9 @@ export default function LandingPage() {
             {/* Header */}
             <header className="header">
                 <div className="header-content">
-                    <div className="logo-wrapper">
-                        <img src="/logo-full.png" alt="ClareIA" height={40} className="h-10 w-auto" />
-                    </div>
+                    <Link href="/" className="logo-wrapper">
+                        <Logo size="md" theme="dark" />
+                    </Link>
 
                     <nav className="nav-links">
                         <a href="#funcionalidades" className="nav-link">Funcionalidades</a>
@@ -1189,7 +1168,7 @@ export default function LandingPage() {
                     <div className="footer-grid">
                         <div>
                             <div className="footer-brand">
-                                <img src="/logo-full.png" alt="ClareIA" height={40} className="h-10 w-auto" />
+                                <img src="/logo-v2.png" alt="ClareIA" height={56} className="h-14 w-auto" />
                             </div>
                             <p className="footer-desc">
                                 Elevando o padrão da odontologia global através da inovação digital e inteligência artificial de ponta.

@@ -139,22 +139,48 @@ export default function LandingPage() {
                 }
 
                 .liquid-button {
-                    background: linear-gradient(135deg, #2bbdee 0%, #1a8fb8 100%);
-                    box-shadow: 0 0 20px rgba(43, 189, 238, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+                    background: linear-gradient(135deg, #2bbdee 0%, #0ea5e9 50%, #0284c7 100%);
+                    box-shadow: 
+                        0 4px 15px rgba(43, 189, 238, 0.3),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.4),
+                        inset 0 -2px 5px rgba(0, 0, 0, 0.1);
                     border: none;
-                    border-radius: 9999px;
+                    border-radius: 0.5rem;
                     padding: 0.625rem 1.5rem;
-                    color: #050505;
+                    color: white;
                     font-size: 0.875rem;
-                    font-weight: 700;
-                    letter-spacing: 0.025em;
+                    font-weight: 600;
+                    letter-spacing: 0.05em;
+                    text-transform: uppercase;
                     cursor: pointer;
-                    transition: all 0.3s ease;
+                    transition: all 0.2s;
+                    text-decoration: none;
+                    position: relative;
+                    overflow: hidden;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .liquid-button::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
+                    opacity: 0;
+                    transition: opacity 0.2s;
                 }
 
                 .liquid-button:hover {
-                    box-shadow: 0 0 30px rgba(43, 189, 238, 0.6), inset 0 4px 8px rgba(255, 255, 255, 0.4);
                     transform: translateY(-2px);
+                    box-shadow: 0 6px 20px rgba(43, 189, 238, 0.4);
+                }
+
+                .liquid-button:hover::after {
+                    opacity: 1;
                 }
 
                 /* Hero Section */
@@ -284,21 +310,48 @@ export default function LandingPage() {
                 }
 
                 .btn-secondary {
-                    background: rgba(255, 255, 255, 0.03);
-                    backdrop-filter: blur(12px);
-                    border: 1px solid rgba(255, 255, 255, 0.1);
-                    border-radius: 0.75rem;
+                    background: linear-gradient(135deg, #2bbdee 0%, #0ea5e9 50%, #0284c7 100%);
+                    box-shadow: 
+                        0 4px 15px rgba(43, 189, 238, 0.3),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.4),
+                        inset 0 -2px 5px rgba(0, 0, 0, 0.1);
+                    border: none;
+                    border-radius: 0.5rem;
                     padding: 1.25rem 2.5rem;
                     color: white;
                     font-size: 1.125rem;
-                    font-weight: 700;
+                    font-weight: 600;
+                    letter-spacing: 0.05em;
+                    text-transform: uppercase;
                     cursor: pointer;
-                    transition: all 0.3s ease;
+                    transition: all 0.2s;
                     text-decoration: none;
+                    position: relative;
+                    overflow: hidden;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .btn-secondary::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
+                    opacity: 0;
+                    transition: opacity 0.2s;
                 }
 
                 .btn-secondary:hover {
-                    background: rgba(255, 255, 255, 0.05);
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 20px rgba(43, 189, 238, 0.4);
+                }
+
+                .btn-secondary:hover::after {
+                    opacity: 1;
                 }
 
                 /* Dashboard Mockup */
@@ -756,21 +809,48 @@ export default function LandingPage() {
                 }
 
                 .cta-btn-secondary {
-                    background: rgba(255, 255, 255, 0.03);
-                    backdrop-filter: blur(12px);
-                    border: 1px solid rgba(255, 255, 255, 0.1);
-                    border-radius: 0.75rem;
+                    background: linear-gradient(135deg, #2bbdee 0%, #0ea5e9 50%, #0284c7 100%);
+                    box-shadow: 
+                        0 4px 15px rgba(43, 189, 238, 0.3),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.4),
+                        inset 0 -2px 5px rgba(0, 0, 0, 0.1);
+                    border: none;
+                    border-radius: 0.5rem;
                     padding: 1.25rem 3rem;
                     color: white;
                     font-size: 1.25rem;
-                    font-weight: 700;
+                    font-weight: 600;
+                    letter-spacing: 0.05em;
+                    text-transform: uppercase;
                     cursor: pointer;
-                    transition: all 0.3s ease;
+                    transition: all 0.2s;
                     text-decoration: none;
+                    position: relative;
+                    overflow: hidden;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .cta-btn-secondary::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
+                    opacity: 0;
+                    transition: opacity 0.2s;
                 }
 
                 .cta-btn-secondary:hover {
-                    background: rgba(255, 255, 255, 0.05);
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 20px rgba(43, 189, 238, 0.4);
+                }
+
+                .cta-btn-secondary:hover::after {
+                    opacity: 1;
                 }
 
                 .cta-note {

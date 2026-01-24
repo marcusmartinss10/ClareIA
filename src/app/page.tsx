@@ -1235,15 +1235,19 @@ export default function LandingPage() {
                                 <h3 className="pricing-name">Essencial</h3>
                                 <div className="pricing-price">R$ 99<span style={{ fontSize: '1.5rem' }}>,90</span></div>
                                 <span className="pricing-period">/mês</span>
+                                <p style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.5)', marginTop: '0.5rem' }}>Para consultórios que buscam modernização simples.</p>
                             </div>
                             <ul className="pricing-features">
-                                <li className="pricing-feature"><span className="check-icon">✓</span> 1 Dentista</li>
-                                <li className="pricing-feature"><span className="check-icon">✓</span> Lembretes por E-mail</li>
-                                <li className="pricing-feature"><span className="check-icon">✓</span> Agenda Básica</li>
-                                <li className="pricing-feature"><span className="check-icon">✓</span> Prontuário Digital</li>
-                                <li className="pricing-feature"><span className="check-icon">✓</span> App do Paciente</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> <strong>2 Dentistas</strong></li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Agenda Simples</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Prontuário Digital Básico</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Histórico de Atendimentos</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Suporte por Email</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Backup Diário Automático</li>
                             </ul>
-                            <Link href="/register?plan=essential" className="btn-secondary" style={{ width: '100%', textAlign: 'center', fontSize: '1rem' }}>Começar Grátis</Link>
+                            <div style={{ marginTop: 'auto' }}>
+                                <Link href="/register?plan=essential" className="btn-secondary" style={{ width: '100%', textAlign: 'center', fontSize: '1rem', display: 'block' }}>Começar Agora</Link>
+                            </div>
                         </div>
 
                         {/* Professional */}
@@ -1253,15 +1257,20 @@ export default function LandingPage() {
                                 <h3 className="pricing-name">Profissional</h3>
                                 <div className="pricing-price">R$ 199<span style={{ fontSize: '1.5rem' }}>,90</span></div>
                                 <span className="pricing-period">/mês</span>
+                                <p style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.5)', marginTop: '0.5rem' }}>Para clínicas em crescimento que querem automatizar.</p>
                             </div>
                             <ul className="pricing-features">
-                                <li className="pricing-feature"><span className="check-icon">✓</span> Até 8 Dentistas</li>
-                                <li className="pricing-feature"><span className="check-icon">✓</span> Lembretes via App</li>
-                                <li className="pricing-feature"><span className="check-icon">✓</span> Módulo Protético</li>
-                                <li className="pricing-feature"><span className="check-icon">✓</span> Dashboard IA Avançado</li>
-                                <li className="pricing-feature"><span className="check-icon">✓</span> Financeiro Completo</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> <strong>Até 8 Dentistas</strong></li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> <strong>Integração com Protéticos</strong></li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Agenda Avançada + Google Calendar</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> CRM e Análise de Pacientes</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Controle de Tempo de Atendimento</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Dashboard com IA</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Suporte Chat + Email</li>
                             </ul>
-                            <Link href="/register?plan=professional" className="liquid-button" style={{ width: '100%', textAlign: 'center', fontSize: '1rem' }}>Assinar Agora</Link>
+                            <div style={{ marginTop: 'auto' }}>
+                                <Link href="/register?plan=professional" className="liquid-button" style={{ width: '100%', textAlign: 'center', fontSize: '1rem', display: 'block' }}>Assinar Agora</Link>
+                            </div>
                         </div>
 
                         {/* Enterprise */}
@@ -1270,15 +1279,20 @@ export default function LandingPage() {
                                 <h3 className="pricing-name">Enterprise</h3>
                                 <div className="pricing-price">R$ 349<span style={{ fontSize: '1.5rem' }}>,90</span></div>
                                 <span className="pricing-period">/mês base + extras</span>
+                                <p style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.5)', marginTop: '0.5rem' }}>Para redes e grandes clínicas com gestão complexa.</p>
                             </div>
                             <ul className="pricing-features">
-                                <li className="pricing-feature"><span className="check-icon">✓</span> Dentistas Ilimitados</li>
-                                <li className="pricing-feature"><span className="check-icon">✓</span> Multi-Clínicas</li>
-                                <li className="pricing-feature"><span className="check-icon">✓</span> Teleconsulta HD</li>
-                                <li className="pricing-feature"><span className="check-icon">✓</span> Controle de Estoque</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> <strong>Dentistas Ilimitados</strong></li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Multi-Clínicas e Gestão de Rede</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> IA Avançada e Teleodontologia</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Integração com Convênios</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Gestão de Estoque e RH</li>
+                                <li className="pricing-feature"><span className="check-icon">✓</span> Marketing e Fidelização Avançados</li>
                                 <li className="pricing-feature"><span className="check-icon">✓</span> Suporte Prioritário 24/7</li>
                             </ul>
-                            <Link href="/register?plan=enterprise" className="btn-secondary" style={{ width: '100%', textAlign: 'center', fontSize: '1rem' }}>Falar com Vendas</Link>
+                            <div style={{ marginTop: 'auto' }}>
+                                <Link href="/register?plan=enterprise" className="btn-secondary" style={{ width: '100%', textAlign: 'center', fontSize: '1rem', display: 'block' }}>Falar com Vendas</Link>
+                            </div>
                         </div>
                     </div>
                 </div>

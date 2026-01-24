@@ -297,28 +297,7 @@ export default function LandingPage() {
                     }
                 }
 
-                .btn-primary {
-                    background: linear-gradient(135deg, #2bbdee 0%, #1a8fb8 100%);
-                    box-shadow: 0 0 20px rgba(43, 189, 238, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.3);
-                    border: none;
-                    border-radius: 0.75rem;
-                    padding: 1.25rem 2.5rem;
-                    color: #050505;
-                    font-size: 1.125rem;
-                    font-weight: 700;
-                    letter-spacing: -0.025em;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                    text-decoration: none;
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                }
 
-                .btn-primary:hover {
-                    box-shadow: 0 0 30px rgba(43, 189, 238, 0.6), inset 0 4px 8px rgba(255, 255, 255, 0.4);
-                    transform: translateY(-2px);
-                }
 
                 .glass-card {
                     background: rgba(255, 255, 255, 0.03);
@@ -803,27 +782,7 @@ export default function LandingPage() {
                     }
                 }
 
-                .cta-btn-primary {
-                    background: linear-gradient(135deg, #2bbdee 0%, #1a8fb8 100%);
-                    box-shadow: 0 0 20px rgba(43, 189, 238, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.3);
-                    border: none;
-                    border-radius: 0.75rem;
-                    padding: 1.25rem 3rem;
-                    color: #050505;
-                    font-size: 1.25rem;
-                    font-weight: 900;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                    text-decoration: none;
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                }
 
-                .cta-btn-primary:hover {
-                    box-shadow: 0 0 40px rgba(43, 189, 238, 0.7);
-                    transform: translateY(-2px);
-                }
 
                 .cta-btn-secondary {
                     background: rgba(255, 255, 255, 0.03);
@@ -1055,7 +1014,7 @@ export default function LandingPage() {
                         </p>
 
                         <div className="hero-buttons">
-                            <Link href="/login" className="btn-primary">
+                            <Link href="/login" className="landing-btn-primary">
                                 Começar Teste Grátis
                             </Link>
                             <button className="btn-secondary">Ver Funcionalidades</button>
@@ -1215,7 +1174,7 @@ export default function LandingPage() {
                             Comece hoje mesmo seu período de teste.
                         </p>
                         <div className="cta-buttons">
-                            <Link href="/login" className="cta-btn-primary">
+                            <Link href="/login" className="landing-cta-btn-primary">
                                 Iniciar Teste Gratuito
                             </Link>
                             <button className="cta-btn-secondary">Falar com Consultor</button>

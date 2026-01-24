@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useToast } from '@/components/Toast';
+import { useAppointments } from '@/hooks/useData';
 
 interface Paciente {
     id: string;
@@ -31,10 +32,8 @@ interface Agendamento {
 export default function AgendaPage() {
     const [dataAtual, setDataAtual] = useState(new Date());
     const [visao, setVisao] = useState<'dia' | 'semana' | 'mes'>('dia');
-    const [agendamentos, setAgendamentos] = useState<Agendamento[]>([]);
     const [pacientes, setPacientes] = useState<Paciente[]>([]);
     const [dentistas, setDentistas] = useState<Dentista[]>([]);
-    const [loading, setLoading] = useState(true);
     const [modalAberto, setModalAberto] = useState(false);
     const [detalhesAberto, setDetalhesAberto] = useState<Agendamento | null>(null);
     const [salvando, setSalvando] = useState(false);
@@ -50,12 +49,31 @@ export default function AgendaPage() {
         paymentMethod: '' as '' | 'CASH' | 'CARD' | 'PIX' | 'DENTAL_PLAN',
     });
 
-    useEffect(() => {
-        carregarDados();
-    }, [dataAtual, visao]);
+    // SWR Data Fetching
+    const { appointments: rawAppointments, mutate: mutateAgendamentos, isLoading } = useAppointments(dataAtual);
 
-    const carregarDados = async () => {
-        setLoading(true);
+    // Derived state
+    const agendamentos = (rawAppointments || []).map((ag: any) => ({
+        id: ag.id,
+        horario: new Date(ag.scheduledAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', hour12: false }),
+        pacienteId: ag.patientId,
+        pacienteNome: ag.patientName || 'Paciente',
+        motivo: ag.reason,
+        status: ag.status,
+        dentistaId: ag.dentistId,
+        dentistaNome: ag.dentistName || 'Dentista',
+        observacoes: ag.adminNotes,
+        scheduledAt: ag.scheduledAt,
+    }));
+
+    // Legacy Loading State (aliased to SWR)
+    const loading = isLoading;
+
+    useEffect(() => {
+        carregarAuxiliares();
+    }, []);
+
+    const carregarAuxiliares = async () => {
         try {
             const resPacientes = await fetch('/api/patients');
             if (resPacientes.ok) {
@@ -68,36 +86,9 @@ export default function AgendaPage() {
                 const dataDent = await resDentistas.json();
                 setDentistas(dataDent.usuarios || []);
             }
-
-            const ano = dataAtual.getFullYear();
-            const mes = String(dataAtual.getMonth() + 1).padStart(2, '0');
-            const dia = String(dataAtual.getDate()).padStart(2, '0');
-            const dataStr = `${ano}-${mes}-${dia}`;
-            const resAgendamentos = await fetch(`/api/appointments?date=${dataStr}`);
-            if (resAgendamentos.ok) {
-                const dataAg = await resAgendamentos.json();
-                const agendamentosFormatados = (dataAg.agendamentos || []).map((ag: any) => {
-                    const date = new Date(ag.scheduledAt);
-                    return {
-                        id: ag.id,
-                        horario: date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', hour12: false }),
-                        pacienteId: ag.patientId,
-                        pacienteNome: ag.patientName || 'Paciente',
-                        motivo: ag.reason,
-                        status: ag.status,
-                        dentistaId: ag.dentistId,
-                        dentistaNome: ag.dentistName || 'Dentista',
-                        observacoes: ag.adminNotes,
-                        scheduledAt: ag.scheduledAt,
-                    };
-                });
-                setAgendamentos(agendamentosFormatados);
-            }
         } catch (error) {
-            console.error('Erro ao carregar dados:', error);
-            toast.error('Erro ao carregar dados da agenda');
+            console.error('Erro ao carregar dados auxiliares:', error);
         }
-        setLoading(false);
     };
 
     const navegarData = (direcao: 'anterior' | 'proximo') => {
@@ -213,7 +204,7 @@ export default function AgendaPage() {
                 if (novaData.toDateString() !== dataAtual.toDateString()) {
                     setDataAtual(novaData);
                 } else {
-                    carregarDados();
+                    mutateAgendamentos();
                 }
             } else {
                 const data = await res.json();
@@ -237,7 +228,7 @@ export default function AgendaPage() {
             if (res.ok) {
                 toast.success('Agendamento cancelado');
                 setDetalhesAberto(null);
-                carregarDados();
+                mutateAgendamentos();
             } else {
                 toast.error('Erro ao cancelar agendamento');
             }

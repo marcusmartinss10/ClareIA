@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useToast } from '@/components/Toast';
+import { useAppointments, useConsultations } from '@/hooks/useData';
 
 interface Paciente {
     id: string;
@@ -43,9 +44,6 @@ interface Prontuario {
 }
 
 export default function ConsultationPage() {
-    const [atendimentos, setAtendimentos] = useState<AtendimentoAtivo[]>([]);
-    const [agendamentosHoje, setAgendamentosHoje] = useState<AgendamentoHoje[]>([]);
-    const [loading, setLoading] = useState(true);
     const [modalProntuario, setModalProntuario] = useState<AtendimentoAtivo | null>(null);
     const [prontuario, setProntuario] = useState<Prontuario>({
         procedimentos: [{ name: '', tooth: '', notes: '' }],
@@ -60,95 +58,78 @@ export default function ConsultationPage() {
     const [horariosDisponiveis, setHorariosDisponiveis] = useState<string[]>([]);
     const [carregandoHorarios, setCarregandoHorarios] = useState(false);
     const [valorProcedimento, setValorProcedimento] = useState<string>('');
+    const [now, setNow] = useState(Date.now()); // State for timer ticker
+
     const toast = useToast();
 
-    useEffect(() => {
-        carregarDados();
-    }, []);
+    // Data Fetching with SWR
+    const hoje = new Date().toISOString().split('T')[0];
+    const { appointments: agendamentosRaw, mutate: mutateAgendamentos, isLoading: loadingAgendamentos } = useAppointments(hoje);
+    const { consultations: consultasRaw, mutate: mutateConsultas, isLoading: loadingConsultas } = useConsultations();
 
+    const loading = loadingAgendamentos || loadingConsultas;
+
+    // Derive state from SWR data
+    const agendamentosHoje = (agendamentosRaw || []).map((ag: any) => ({
+        id: ag.id,
+        horario: new Date(ag.scheduledAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', hour12: false }),
+        pacienteId: ag.patientId,
+        pacienteNome: ag.patientName || 'Paciente',
+        motivo: ag.reason,
+        observacoes: ag.adminNotes,
+        status: ag.status,
+        dentistaNome: ag.dentistName || 'Dentista',
+        dentistaId: ag.dentistId,
+    })) as AgendamentoHoje[];
+
+    // Filter active consultations
+    const atendimentos = (consultasRaw || [])
+        .filter(c => c.status === 'IN_PROGRESS' || c.status === 'PAUSED')
+        .map(c => {
+            const agendamento = agendamentosHoje.find(a => a.id === c.appointmentId);
+
+            // Calculate real-time duration
+            let tempoTotal = 0;
+            if (c.status === 'PAUSED' && c.pausedAt) {
+                const pausedAtTime = new Date(c.pausedAt).getTime();
+                const startedAtTime = new Date(c.startedAt).getTime();
+                tempoTotal = Math.floor((pausedAtTime - startedAtTime) / 1000) - (c.pauseTime || 0);
+            } else {
+                const startedAtTime = new Date(c.startedAt).getTime();
+                // Use 'now' state to force re-render every second
+                tempoTotal = Math.floor((now - startedAtTime) / 1000) - (c.pauseTime || 0);
+            }
+
+            if (tempoTotal < 0) tempoTotal = 0;
+
+            return {
+                id: c.id,
+                appointmentId: c.appointmentId,
+                pacienteId: c.patientId,
+                pacienteNome: agendamento?.pacienteNome || 'Paciente', // Fallback if appointment not in list
+                motivo: agendamento?.motivo || 'Atendimento',
+                observacoesAgenda: agendamento?.observacoes,
+                dentistaId: c.dentistId,
+                dentistaNome: agendamento?.dentistaNome || 'Dentista',
+                inicioAt: new Date(c.startedAt),
+                status: c.status,
+                tempoTotal: tempoTotal,
+                tempoPausado: c.pauseTime || 0,
+            } as AtendimentoAtivo;
+        });
+
+    // Timer Ticker
     useEffect(() => {
         const interval = setInterval(() => {
-            setAtendimentos(prev =>
-                prev.map(a => {
-                    if (a.status === 'IN_PROGRESS') {
-                        return { ...a, tempoTotal: a.tempoTotal + 1 };
-                    }
-                    return a;
-                })
-            );
+            setNow(Date.now());
         }, 1000);
         return () => clearInterval(interval);
     }, []);
 
-    const carregarDados = async () => {
-        setLoading(true);
-        try {
-            const hoje = new Date().toISOString().split('T')[0];
-            const resAgendamentos = await fetch(`/api/appointments?date=${hoje}`);
-            if (resAgendamentos.ok) {
-                const data = await resAgendamentos.json();
-                const agendamentosFormatados = (data.agendamentos || []).map((ag: any) => {
-                    const date = new Date(ag.scheduledAt);
-                    return {
-                        id: ag.id,
-                        horario: date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', hour12: false }),
-                        pacienteId: ag.patientId,
-                        pacienteNome: ag.patientName || 'Paciente',
-                        motivo: ag.reason,
-                        observacoes: ag.adminNotes,
-                        status: ag.status,
-                        dentistaNome: ag.dentistName || 'Dentista',
-                        dentistaId: ag.dentistId,
-                    };
-                });
-                setAgendamentosHoje(agendamentosFormatados);
-
-                const emAndamento = agendamentosFormatados.filter((a: AgendamentoHoje) => a.status === 'IN_PROGRESS');
-                if (emAndamento.length > 0) {
-                    const resConsultas = await fetch('/api/consultations');
-                    if (resConsultas.ok) {
-                        const dataConsultas = await resConsultas.json();
-                        const atendimentosAtivos = (dataConsultas.atendimentos || [])
-                            .filter((c: any) => c.status === 'IN_PROGRESS' || c.status === 'PAUSED')
-                            .map((c: any) => {
-                                const agendamento = emAndamento.find((a: AgendamentoHoje) => a.id === c.appointmentId);
-
-                                let tempoTotal = 0;
-                                if (c.status === 'PAUSED' && c.pausedAt) {
-                                    const pausedAtTime = new Date(c.pausedAt).getTime();
-                                    const startedAtTime = new Date(c.startedAt).getTime();
-                                    tempoTotal = Math.floor((pausedAtTime - startedAtTime) / 1000) - (c.pauseTime || 0);
-                                } else {
-                                    const startedAtTime = new Date(c.startedAt).getTime();
-                                    tempoTotal = Math.floor((Date.now() - startedAtTime) / 1000) - (c.pauseTime || 0);
-                                }
-
-                                if (tempoTotal < 0) tempoTotal = 0;
-
-                                return {
-                                    id: c.id,
-                                    appointmentId: c.appointmentId,
-                                    pacienteId: c.patientId,
-                                    pacienteNome: agendamento?.pacienteNome || 'Paciente',
-                                    motivo: agendamento?.motivo || '',
-                                    observacoesAgenda: agendamento?.observacoes,
-                                    dentistaId: c.dentistId,
-                                    dentistaNome: agendamento?.dentistaNome || 'Dentista',
-                                    inicioAt: new Date(c.startedAt),
-                                    status: c.status,
-                                    tempoTotal: c.totalTime || tempoTotal,
-                                    tempoPausado: c.pauseTime || 0,
-                                };
-                            });
-                        setAtendimentos(atendimentosAtivos);
-                    }
-                }
-            }
-        } catch (error) {
-            console.error('Erro ao carregar dados:', error);
-            toast.error('Erro ao carregar atendimentos');
-        }
-        setLoading(false);
+    // Helper functions for mutations
+    const refreshData = () => {
+        mutateAgendamentos();
+        mutateConsultas();
     };
 
     const formatarTempo = (segundos: number) => {
@@ -167,8 +148,8 @@ export default function ConsultationPage() {
                 body: JSON.stringify({ id: atendimento.id, action: 'pause' }),
             });
             if (res.ok) {
-                setAtendimentos(prev => prev.map(a => a.id === atendimento.id ? { ...a, status: 'PAUSED' as const } : a));
                 toast.info('Atendimento pausado');
+                refreshData();
             }
         } catch (error) {
             toast.error('Erro ao pausar atendimento');
@@ -183,8 +164,8 @@ export default function ConsultationPage() {
                 body: JSON.stringify({ id: atendimento.id, action: 'resume' }),
             });
             if (res.ok) {
-                setAtendimentos(prev => prev.map(a => a.id === atendimento.id ? { ...a, status: 'IN_PROGRESS' as const } : a));
                 toast.success('Atendimento retomado');
+                refreshData();
             }
         } catch (error) {
             toast.error('Erro ao retomar atendimento');
@@ -265,9 +246,8 @@ export default function ConsultationPage() {
                 } else {
                     toast.success('Atendimento finalizado com sucesso!');
                 }
-                setAtendimentos(prev => prev.filter(a => a.id !== modalProntuario.id));
-                setAgendamentosHoje(prev => prev.map(a => a.id === modalProntuario.appointmentId ? { ...a, status: 'COMPLETED' as const } : a));
                 setModalProntuario(null);
+                refreshData();
             } else {
                 toast.error('Erro ao finalizar atendimento');
             }
@@ -281,11 +261,8 @@ export default function ConsultationPage() {
         try {
             const res = await fetch('/api/consultations', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ appointmentId: agendamento.id }) });
             if (res.ok) {
-                const data = await res.json();
-                const novoAtendimento: AtendimentoAtivo = { id: data.atendimento.id, appointmentId: agendamento.id, pacienteId: agendamento.pacienteId, pacienteNome: agendamento.pacienteNome, motivo: agendamento.motivo, observacoesAgenda: agendamento.observacoes, dentistaId: agendamento.dentistaId, dentistaNome: agendamento.dentistaNome, inicioAt: new Date(), status: 'IN_PROGRESS', tempoTotal: 0, tempoPausado: 0 };
-                setAtendimentos(prev => [...prev, novoAtendimento]);
-                setAgendamentosHoje(prev => prev.map(a => a.id === agendamento.id ? { ...a, status: 'IN_PROGRESS' as const } : a));
                 toast.success(`Atendimento de ${agendamento.pacienteNome} iniciado!`);
+                refreshData();
             } else {
                 const data = await res.json();
                 toast.error(data.error || 'Erro ao iniciar atendimento');

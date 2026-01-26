@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { ToastProvider } from '@/components/Toast';
@@ -180,7 +181,7 @@ export default function DashboardLayout({
         `}</style>
         <div className="loading-content">
           <div className="loading-logo">
-            <img src="/logo-v2.png" alt="ClareIA" height={80} className="h-20 w-auto" />
+            <Image src="/logo-v2.png" alt="ClareIA" height={80} width={80} className="h-20 w-auto" priority />
           </div>
           <div className="spinner" />
         </div>

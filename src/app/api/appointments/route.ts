@@ -13,7 +13,7 @@ async function getClinicId(): Promise<string | null> {
 export async function GET(request: NextRequest) {
     try {
         const clinicId = await getClinicId();
-        console.log('API Appointments - clinicId:', clinicId);
+
 
         if (!clinicId) {
             return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
@@ -25,14 +25,14 @@ export async function GET(request: NextRequest) {
         const endStr = searchParams.get('end');
         const status = searchParams.get('status');
 
-        console.log('API Appointments - Parâmetros:', { dateStr, startStr, endStr, status });
+
 
         let agendamentos;
         if (dateStr) {
             // Criar a data a partir da string YYYY-MM-DD para evitar problemas de timezone
             const [ano, mes, dia] = dateStr.split('-').map(Number);
             const date = new Date(ano, mes - 1, dia);
-            console.log('API Appointments - Data parseada:', date.toISOString());
+
             agendamentos = await database.appointments.findByDate(clinicId, date);
         } else if (startStr && endStr) {
             agendamentos = await database.appointments.findByDateRange(
@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
             agendamentos = await database.appointments.findByClinic(clinicId);
         }
 
-        console.log('API Appointments - Agendamentos encontrados:', agendamentos.length);
+
 
         // Filtrar por status se especificado
         if (status) {

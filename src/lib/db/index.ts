@@ -258,7 +258,7 @@ export const database = {
             const endDateStr = `${endDate.getFullYear()}-${String(endDate.getMonth() + 1).padStart(2, '0')}-${String(endDate.getDate()).padStart(2, '0')}`;
             const endUTC = `${endDateStr}T02:59:59.999Z`;
 
-            console.log(`Buscando agendamentos de ${startUTC} a ${endUTC}`);
+
 
             const { data, error } = await supabaseAdmin
                 .from('appointments')
@@ -269,7 +269,6 @@ export const database = {
                 .order('scheduled_at');
 
             if (error) {
-                console.error('Erro ao buscar agendamentos:', error);
                 return [];
             }
             if (!data) return [];

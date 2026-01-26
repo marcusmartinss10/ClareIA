@@ -952,7 +952,7 @@ export default function LandingPage() {
 
                     <div className="header-actions">
                         <Link href="/login" className="btn-login">Entrar</Link>
-                        <Link href="/login" className="btn btn-primary">Começar Agora</Link>
+                        <Link href="/register" className="btn btn-primary">Começar Agora</Link>
                     </div>
                 </div>
             </header>
@@ -973,7 +973,7 @@ export default function LandingPage() {
                             ClareIA é a plataforma completa que une gestão clínica, inteligência artificial e design premium para transformar seu consultório.
                         </p>
                         <div className="hero-buttons">
-                            <Link href="/login" className="btn btn-primary" style={{ padding: '1.25rem 2.5rem', fontSize: '1.125rem' }}>
+                            <Link href="/register" className="btn btn-primary" style={{ padding: '1.25rem 2.5rem', fontSize: '1.125rem' }}>
                                 Começar Gratuitamente
                             </Link>
                         </div>
@@ -1292,7 +1292,7 @@ export default function LandingPage() {
                         <h2 className="cta-title">Pronto para transformar<br />seu consultório?</h2>
                         <p className="cta-subtitle">Junte-se a centenas de dentistas que já modernizaram suas clínicas com a ClareIA.</p>
                         <div className="cta-buttons">
-                            <Link href="/login" className="btn btn-primary" style={{ padding: '1.25rem 3rem', fontSize: '1.25rem' }}>
+                            <Link href="/register" className="btn btn-primary" style={{ padding: '1.25rem 3rem', fontSize: '1.25rem' }}>
                                 Começar Grátis
                             </Link>
                         </div>

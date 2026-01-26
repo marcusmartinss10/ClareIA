@@ -415,7 +415,7 @@ export default function LoginPage() {
           <div className="divider">
             <p>
               Novo no ClareIA?
-              <a href="#">Solicitar Acesso</a>
+              <Link href="/register">Solicitar Acesso</Link>
             </p>
           </div>
         </div>

@@ -27,6 +27,7 @@ export async function registerUser(formData: RegisterFormData) {
             data: {
                 full_name: fullName,
             },
+            emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://clare-ia-psi.vercel.app'}/auth/callback`,
         },
     })
 
@@ -91,7 +92,8 @@ export async function registerUser(formData: RegisterFormData) {
         if (memberError) throw memberError
 
     } catch (error: any) {
-        console.error("Registration provisioning error:", error)
+        console.error("Registration provisioning error FULL OBJECT:", JSON.stringify(error, null, 2))
+        console.error("Registration provisioning error MESSAGE:", error?.message)
         // Ideally we would delete the auth user here to "rollback"
         return { error: "Erro ao configurar a conta da clínica. Por favor, tente novamente ou contate o suporte." }
     }

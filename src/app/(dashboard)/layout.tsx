@@ -60,6 +60,12 @@ const menuItems = [
     roles: ['ADMIN']
   },
   {
+    href: '/settings/team',
+    label: 'Equipe',
+    icon: '👥',
+    roles: ['ADMIN']
+  },
+  {
     href: '/subscription',
     label: 'Assinatura',
     icon: '💎',

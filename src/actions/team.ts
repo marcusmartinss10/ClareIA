@@ -55,9 +55,7 @@ export async function inviteMember(email: string, role: Role) {
         // If user exists, it sends an email (which is fine). 
         // We just need their ID to link them.
 
-        const { data: inviteData, error: inviteError } = await admin.auth.admin.inviteUserByEmail({
-            email: email,
-            // We can pass metadata, but better to set it on organization_members
+        const { data: inviteData, error: inviteError } = await admin.auth.admin.inviteUserByEmail(email, {
             data: { inserted_by: user.id }
         });
 

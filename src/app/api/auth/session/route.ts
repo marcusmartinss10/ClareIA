@@ -1,44 +1,60 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
-import { database } from '@/lib/db';
-
-import { getSession } from '@/lib/auth';
+import { createClient } from '@/lib/supabase/server';
+import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-// Obter usuário da sessão
 export async function GET() {
     try {
-        const session = await getSession();
+        const supabase = await createClient();
 
-        if (!session) {
+        const { data: { user }, error } = await supabase.auth.getUser();
+
+        if (error || !user) {
             return NextResponse.json(
                 { error: 'Não autenticado' },
                 { status: 401 }
             );
         }
 
-        const user = await database.users.findById(session.userId);
+        // Buscar dados do membro (role e organização)
+        const { data: memberData, error: memberError } = await supabase
+            .from('organization_members')
+            .select(`
+                role,
+                organization:organizations (
+                    id,
+                    name
+                )
+            `)
+            .eq('user_id', user.id)
+            .single();
 
-        if (!user) {
-            return NextResponse.json(
-                { error: 'Usuário não encontrado' },
-                { status: 404 }
-            );
+        let role = 'DENTIST';
+        let clinicName = '';
+        let clinicId = '';
+
+        if (memberData) {
+            role = memberData.role;
+            if (memberData.organization) {
+                // @ts-ignore
+                clinicName = memberData.organization.name;
+                // @ts-ignore
+                clinicId = memberData.organization.id;
+            }
         }
 
-        const clinic = await database.clinics.findById(user.clinicId);
+        const name = user.user_metadata?.full_name || user.email;
 
         return NextResponse.json({
             user: {
                 id: user.id,
-                name: user.name,
+                name: name,
                 email: user.email,
-                role: user.role,
-                clinicId: user.clinicId,
-                clinicName: clinic?.name,
+                role: role,
+                clinicId: clinicId,
+                clinicName: clinicName,
             },
-            subscriptionStatus: session.subscriptionStatus,
+            subscriptionStatus: 'ACTIVE' // Placeholder temporário
         });
     } catch (error) {
         console.error('Erro ao obter sessão:', error);

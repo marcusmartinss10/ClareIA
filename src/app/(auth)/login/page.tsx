@@ -1,21 +1,35 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Logo from '@/components/Logo';
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const verified = searchParams.get('verified');
+    if (verified === 'true') {
+      setSuccess('Email verificado com sucesso! Faça login para continuar.');
+    }
+    const errorParam = searchParams.get('error');
+    if (errorParam === 'auth_code_error') {
+      setError('Link de verificação inválido ou expirado.');
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setSuccess('');
     setLoading(true);
 
     try {
@@ -252,6 +266,17 @@ export default function LoginPage() {
                     text-align: center;
                 }
 
+                /* Success Message */
+                .success-message {
+                    padding: 0.75rem;
+                    background: rgba(34, 197, 94, 0.1);
+                    border: 1px solid rgba(34, 197, 94, 0.3);
+                    border-radius: 0.5rem;
+                    color: #4ade80;
+                    font-size: 0.875rem;
+                    text-align: center;
+                }
+
                 /* Forgot Password */
                 .forgot-link {
                     text-align: right;
@@ -348,6 +373,11 @@ export default function LoginPage() {
 
           {/* Login Form */}
           <form className="login-form" onSubmit={handleSubmit}>
+            {/* Success Message */}
+            {success && (
+              <div className="success-message">{success}</div>
+            )}
+
             {/* Error Message */}
             {error && (
               <div className="error-message">{error}</div>

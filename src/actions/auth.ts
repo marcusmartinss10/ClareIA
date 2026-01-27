@@ -27,7 +27,7 @@ export async function registerUser(formData: RegisterFormData) {
             data: {
                 full_name: fullName,
             },
-            emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://clare-ia-psi.vercel.app'}/auth/callback`,
+            emailRedirectTo: 'https://clare-ia-psi.vercel.app/auth/callback',
         },
     })
 

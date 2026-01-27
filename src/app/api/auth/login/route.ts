@@ -1,7 +1,5 @@
+import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
-import bcrypt from 'bcryptjs';
-import { database } from '@/lib/db';
-import { signSession } from '@/lib/auth/session';
 
 export async function POST(request: NextRequest) {
     try {
@@ -14,77 +12,26 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Buscar usuário por email
-        const user = await database.users.findByEmail(email);
+        const supabase = await createClient();
 
-        if (!user) {
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+        });
+
+        if (error) {
+            console.error('Erro no login Supabase:', error.message);
             return NextResponse.json(
-                { error: 'Usuário não encontrado' },
+                { error: 'Credenciais inválidas ou usuário não encontrado.' },
                 { status: 401 }
             );
         }
 
-        // Verificar senha
-        const isValidPassword = await bcrypt.compare(password, user.passwordHash);
-
-        if (!isValidPassword) {
-            return NextResponse.json(
-                { error: 'Senha incorreta' },
-                { status: 401 }
-            );
-        }
-
-        // Verificar assinatura da clínica
-        const subscription = await database.subscriptions.findByClinic(user.clinicId);
-
-        if (!subscription) {
-            return NextResponse.json(
-                { error: 'Clínica sem assinatura. Entre em contato com o suporte.' },
-                { status: 403 }
-            );
-        }
-
-        if (subscription.status === 'CANCELLED') {
-            return NextResponse.json(
-                { error: 'Assinatura cancelada. Entre em contato para reativar.' },
-                { status: 403 }
-            );
-        }
-
-        // Buscar clínica
-        const clinic = await database.clinics.findById(user.clinicId);
-
-        // Retornar dados do usuário (sem senha)
-        const response = NextResponse.json({
+        return NextResponse.json({
             success: true,
-            user: {
-                id: user.id,
-                name: user.name,
-                email: user.email,
-                role: user.role,
-                clinicId: user.clinicId,
-                clinicName: clinic?.name,
-                subscriptionStatus: subscription.status,
-            },
+            user: data.user,
         });
 
-        // Definir cookie de sessão assinado
-        const sessionToken = await signSession({
-            userId: user.id,
-            clinicId: user.clinicId,
-            role: user.role,
-            subscriptionStatus: subscription.status,
-        });
-
-        response.cookies.set('session', sessionToken, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'lax',
-            maxAge: 60 * 60 * 24, // 24 horas
-            path: '/',
-        });
-
-        return response;
     } catch (error) {
         console.error('Erro no login:', error);
         return NextResponse.json(

@@ -1,19 +1,26 @@
+import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
-import { database } from '@/lib/db';
 
-import { getSession } from '@/lib/auth';
+export const dynamic = 'force-dynamic';
 
-async function getClinicId(): Promise<string | null> {
-    const session = await getSession();
-    return session?.clinicId || null;
+async function getClinicId(supabase: any) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return null;
+
+    const { data: member } = await supabase
+        .from('organization_members')
+        .select('organization_id')
+        .eq('user_id', user.id)
+        .single();
+
+    return member?.organization_id || null;
 }
 
 // GET - Listar agendamentos
 export async function GET(request: NextRequest) {
     try {
-        const clinicId = await getClinicId();
-
+        const supabase = await createClient();
+        const clinicId = await getClinicId(supabase);
 
         if (!clinicId) {
             return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
@@ -25,44 +32,39 @@ export async function GET(request: NextRequest) {
         const endStr = searchParams.get('end');
         const status = searchParams.get('status');
 
+        let query = supabase
+            .from('appointments')
+            .select(`
+                *,
+                patient:patients(name),
+                dentist:profiles(full_name)
+            `)
+            .eq('clinic_id', clinicId);
 
-
-        let agendamentos;
         if (dateStr) {
-            // Criar a data a partir da string YYYY-MM-DD para evitar problemas de timezone
-            const [ano, mes, dia] = dateStr.split('-').map(Number);
-            const date = new Date(ano, mes - 1, dia);
-
-            agendamentos = await database.appointments.findByDate(clinicId, date);
+            const start = `${dateStr}T00:00:00`;
+            const end = `${dateStr}T23:59:59`;
+            query = query.gte('scheduled_at', start).lte('scheduled_at', end);
         } else if (startStr && endStr) {
-            agendamentos = await database.appointments.findByDateRange(
-                clinicId,
-                new Date(startStr),
-                new Date(endStr)
-            );
-        } else {
-            agendamentos = await database.appointments.findByClinic(clinicId);
+            query = query.gte('scheduled_at', startStr).lte('scheduled_at', endStr);
         }
 
-
-
-        // Filtrar por status se especificado
         if (status) {
-            agendamentos = agendamentos.filter(a => a.status === status);
+            query = query.eq('status', status);
         }
 
-        // Buscar nomes de pacientes e dentistas
-        const pacientes = await database.patients.findByClinic(clinicId);
-        const usuarios = await database.users.findByClinic(clinicId);
+        const { data: agendamentos, error } = await query;
 
-        const pacientesMap = new Map(pacientes.map(p => [p.id, p.name]));
-        const usuariosMap = new Map(usuarios.map(u => [u.id, u.name]));
+        if (error) {
+            console.error('Erro Supabase appointments:', error);
+            return NextResponse.json({ error: error.message }, { status: 500 });
+        }
 
-        // Adicionar nomes aos agendamentos
-        const agendamentosCompletos = agendamentos.map(ag => ({
+        // Mapear para o formato esperado pelo frontend
+        const agendamentosCompletos = agendamentos.map((ag: any) => ({
             ...ag,
-            patientName: pacientesMap.get(ag.patientId) || 'Paciente não encontrado',
-            dentistName: usuariosMap.get(ag.dentistId) || 'Dentista não encontrado',
+            patientName: ag.patient?.name || 'Paciente não encontrado',
+            dentistName: ag.dentist?.full_name || 'Dentista não encontrado',
         }));
 
         return NextResponse.json({ agendamentos: agendamentosCompletos });
@@ -75,7 +77,9 @@ export async function GET(request: NextRequest) {
 // POST - Criar agendamento
 export async function POST(request: NextRequest) {
     try {
-        const clinicId = await getClinicId();
+        const supabase = await createClient();
+        const clinicId = await getClinicId(supabase);
+
         if (!clinicId) {
             return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
         }
@@ -90,37 +94,29 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Verificar se paciente existe
-        const paciente = await database.patients.findById(patientId);
-        if (!paciente) {
-            return NextResponse.json({ error: 'Paciente não encontrado' }, { status: 404 });
-        }
+        const { data: agendamento, error } = await supabase
+            .from('appointments')
+            .insert({
+                clinic_id: clinicId,
+                patient_id: patientId,
+                dentist_id: dentistId,
+                scheduled_at: scheduledAt,
+                duration: duration || 30,
+                reason,
+                status: 'SCHEDULED',
+                admin_notes: adminNotes,
+                payment_method: paymentMethod
+            })
+            .select()
+            .single();
 
-        // Verificar se dentista existe
-        const dentista = await database.users.findById(dentistId);
-        if (!dentista) {
-            return NextResponse.json({ error: 'Dentista não encontrado' }, { status: 404 });
+        if (error) {
+            return NextResponse.json({ error: error.message }, { status: 500 });
         }
-
-        const agendamento = await database.appointments.create({
-            clinicId,
-            patientId,
-            dentistId,
-            scheduledAt: new Date(scheduledAt),
-            duration: duration || 30,
-            reason,
-            status: 'SCHEDULED',
-            adminNotes,
-            paymentMethod: paymentMethod || null,
-        });
 
         return NextResponse.json({
             success: true,
-            agendamento: {
-                ...agendamento,
-                patientName: paciente.name,
-                dentistName: dentista.name,
-            }
+            agendamento
         }, { status: 201 });
     } catch (error) {
         console.error('Erro ao criar agendamento:', error);

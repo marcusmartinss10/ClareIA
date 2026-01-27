@@ -1,17 +1,27 @@
+import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
-import { database } from '@/lib/db';
-import { getSession } from '@/lib/auth';
 
-// Helper para obter clinicId da sessão
-async function getClinicId(): Promise<string | null> {
-    const session = await getSession();
-    return session?.clinicId || null;
+export const dynamic = 'force-dynamic';
+
+async function getClinicId(supabase: any) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return null;
+
+    const { data: member } = await supabase
+        .from('organization_members')
+        .select('organization_id')
+        .eq('user_id', user.id)
+        .single();
+
+    return member?.organization_id || null;
 }
 
 // GET - Listar pacientes da clínica
 export async function GET(request: NextRequest) {
     try {
-        const clinicId = await getClinicId();
+        const supabase = await createClient();
+        const clinicId = await getClinicId(supabase);
+
         if (!clinicId) {
             return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
         }
@@ -19,11 +29,21 @@ export async function GET(request: NextRequest) {
         const { searchParams } = new URL(request.url);
         const busca = searchParams.get('q');
 
-        let pacientes;
+        let query = supabase
+            .from('patients')
+            .select('*')
+            .eq('clinic_id', clinicId)
+            .order('name');
+
         if (busca) {
-            pacientes = await database.patients.search(clinicId, busca);
-        } else {
-            pacientes = await database.patients.findByClinic(clinicId);
+            query = query.ilike('name', `%${busca}%`);
+        }
+
+        const { data: pacientes, error } = await query;
+
+        if (error) {
+            console.error('Erro Supabase patients:', error);
+            return NextResponse.json({ error: error.message }, { status: 500 });
         }
 
         return NextResponse.json({ pacientes });
@@ -36,7 +56,9 @@ export async function GET(request: NextRequest) {
 // POST - Criar novo paciente
 export async function POST(request: NextRequest) {
     try {
-        const clinicId = await getClinicId();
+        const supabase = await createClient();
+        const clinicId = await getClinicId(supabase);
+
         if (!clinicId) {
             return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
         }
@@ -51,16 +73,24 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const paciente = await database.patients.create({
-            clinicId,
-            name,
-            cpf,
-            email,
-            phone,
-            birthDate: birthDate ? new Date(birthDate) : new Date(),
-            address,
-            notes,
-        });
+        const { data: paciente, error } = await supabase
+            .from('patients')
+            .insert({
+                clinic_id: clinicId,
+                name,
+                cpf,
+                email,
+                phone,
+                birth_date: birthDate ? new Date(birthDate) : new Date(),
+                address,
+                notes,
+            })
+            .select()
+            .single();
+
+        if (error) {
+            return NextResponse.json({ error: error.message }, { status: 500 });
+        }
 
         return NextResponse.json({ success: true, paciente }, { status: 201 });
     } catch (error) {

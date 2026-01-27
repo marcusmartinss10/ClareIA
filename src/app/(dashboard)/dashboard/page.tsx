@@ -33,24 +33,44 @@ export default function DashboardPage() {
   }, []);
 
   const loadDashboardData = async () => {
-    setTimeout(() => {
+    try {
+      setLoading(true);
+
+      const today = new Date().toISOString().split('T')[0];
+
+      // Fetch appointments for today
+      const resAppointments = await fetch(`/api/appointments?date=${today}`);
+      const dataAppointments = await resAppointments.json();
+      const appointments: AgendamentoHoje[] = dataAppointments.agendamentos?.map((a: any) => ({
+        id: a.id,
+        horario: new Date(a.scheduled_at).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+        paciente: a.patientName,
+        motivo: a.reason,
+        status: a.status
+      })) || [];
+
+      // Fetch all patients for count
+      const resPatients = await fetch('/api/patients');
+      const dataPatients = await resPatients.json();
+      const patientCount = dataPatients.pacientes?.length || 0;
+
+      // Calculate stats
+      const appointmentsToday = appointments.length;
+      const completedToday = appointments.filter(a => a.status === 'COMPLETED').length;
+
       setStats({
-        atendimentosHoje: 5,
-        agendamentosHoje: 8,
-        pacientesAtivos: 127,
-        tempoMedioAtendimento: 32,
+        atendimentosHoje: completedToday,
+        agendamentosHoje: appointmentsToday,
+        pacientesAtivos: patientCount,
+        tempoMedioAtendimento: 30, // Placeholder calculation for now
       });
 
-      setAgendamentosHoje([
-        { id: '1', horario: '08:00', paciente: 'Carlos Oliveira', motivo: 'Limpeza', status: 'COMPLETED' },
-        { id: '2', horario: '09:00', paciente: 'Ana Paula Souza', motivo: 'Clareamento', status: 'COMPLETED' },
-        { id: '3', horario: '10:00', paciente: 'Roberto Ferreira', motivo: 'Manutenção de aparelho', status: 'IN_PROGRESS' },
-        { id: '4', horario: '11:00', paciente: 'Maria Santos', motivo: 'Avaliação', status: 'SCHEDULED' },
-        { id: '5', horario: '14:00', paciente: 'João Silva', motivo: 'Extração', status: 'SCHEDULED' },
-      ]);
-
+      setAgendamentosHoje(appointments);
+    } catch (error) {
+      console.error("Failed to load dashboard data", error);
+    } finally {
       setLoading(false);
-    }, 500);
+    }
   };
 
   const formatMinutes = (minutes: number) => {
@@ -62,6 +82,7 @@ export default function DashboardPage() {
       COMPLETED: { label: 'Concluído', class: 'badge-success' },
       IN_PROGRESS: { label: 'Em andamento', class: 'badge-warning' },
       SCHEDULED: { label: 'Agendado', class: 'badge-gray' },
+      CANCELED: { label: 'Cancelado', class: 'badge-gray' }, // Added CANCELED just in case
     };
     return badges[status] || { label: status, class: 'badge-gray' };
   };

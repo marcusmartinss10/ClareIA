@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
         const { data: appointments, error: appError } = await supabase
             .from('appointments')
             .select('id, status, scheduled_at, reason')
-            .eq('clinic_id', clinicId)
+            .eq('organization_id', clinicId)
             .gte('scheduled_at', startDate)
             .lte('scheduled_at', endDate);
 
@@ -57,7 +57,7 @@ export async function GET(request: NextRequest) {
         const { count: newPatientsCount, error: patError } = await supabase
             .from('patients')
             .select('id', { count: 'exact', head: true })
-            .eq('clinic_id', clinicId)
+            .eq('organization_id', clinicId)
             .gte('created_at', startDate)
             .lte('created_at', endDate);
 

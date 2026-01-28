@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
                 patient:patients(name),
                 dentist:profiles(full_name)
             `)
-            .eq('clinic_id', clinicId);
+            .eq('organization_id', clinicId);
 
         if (dateStr) {
             const start = `${dateStr}T00:00:00`;
@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
         const { data: agendamento, error } = await supabase
             .from('appointments')
             .insert({
-                clinic_id: clinicId,
+                organization_id: clinicId,
                 patient_id: patientId,
                 dentist_id: dentistId,
                 scheduled_at: scheduledAt,

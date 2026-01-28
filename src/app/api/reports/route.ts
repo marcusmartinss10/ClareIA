@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
         const { data: consultations, error: consultError } = await supabaseAdmin
             .from('consultations')
             .select('*')
-            .eq('clinic_id', clinicId)
+            .eq('organization_id', clinicId)
             .gte('started_at', startDate.toISOString())
             .lte('started_at', now.toISOString());
 
@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
         const { data: appointments, error: appError } = await supabaseAdmin
             .from('appointments')
             .select('*')
-            .eq('clinic_id', clinicId)
+            .eq('organization_id', clinicId)
             .gte('scheduled_at', startDate.toISOString())
             .lte('scheduled_at', now.toISOString());
 

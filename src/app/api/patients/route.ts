@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
         let query = supabase
             .from('patients')
             .select('*')
-            .eq('clinic_id', clinicId)
+            .eq('organization_id', clinicId)
             .order('name');
 
         if (busca) {
@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
         const { data: paciente, error } = await supabase
             .from('patients')
             .insert({
-                clinic_id: clinicId,
+                organization_id: clinicId,
                 name,
                 cpf,
                 email,

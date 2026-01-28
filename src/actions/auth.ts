@@ -17,6 +17,9 @@ export async function registerUser(formData: RegisterFormData) {
 
     const supabase = await createClient()
 
+    // Sign out any existing session first to prevent cookie contamination
+    await supabase.auth.signOut()
+
     // Generate Slug (basic implementation)
     const slug = clinicName
         .toLowerCase()

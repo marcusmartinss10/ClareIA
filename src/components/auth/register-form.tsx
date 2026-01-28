@@ -83,7 +83,7 @@ export function RegisterForm() {
 
             setSuccess(true)
             setTimeout(() => {
-                router.push("/dashboard")
+                router.push("/email-confirmation-pending")
             }, 2000)
         } catch (err) {
             setError("Ocorreu um erro inesperado. Tente novamente.")

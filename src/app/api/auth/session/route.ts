@@ -34,7 +34,7 @@ export async function GET() {
         let clinicId = '';
 
         if (memberData) {
-            role = memberData.role;
+            role = memberData.role.toUpperCase();
             if (memberData.organization) {
                 // @ts-ignore
                 clinicName = memberData.organization.name;

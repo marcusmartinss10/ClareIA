@@ -1,17 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
-import { database } from '@/lib/db';
+import { createClient } from '@/lib/supabase/server';
 
-function getClinicId(): string | null {
-    const cookieStore = cookies();
-    const sessionCookie = cookieStore.get('session');
-    if (!sessionCookie) return null;
-    try {
-        const session = JSON.parse(sessionCookie.value);
-        return session.clinicId;
-    } catch {
-        return null;
-    }
+export const dynamic = 'force-dynamic';
+
+async function getClinicId(supabase: any) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return null;
+
+    const { data: member } = await supabase
+        .from('organization_members')
+        .select('organization_id')
+        .eq('user_id', user.id)
+        .single();
+
+    return member?.organization_id || null;
 }
 
 // GET - Buscar detalhes completos de um paciente
@@ -20,61 +22,76 @@ export async function GET(
     { params }: { params: { id: string } }
 ) {
     try {
-        const clinicId = getClinicId();
+        const supabase = await createClient();
+        const clinicId = await getClinicId(supabase);
         if (!clinicId) {
             return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
         }
 
-        const paciente = await database.patients.findById(params.id);
-        if (!paciente) {
+        // Buscar paciente
+        const { data: paciente, error } = await supabase
+            .from('patients')
+            .select('*')
+            .eq('id', params.id)
+            .eq('organization_id', clinicId)
+            .single();
+
+        if (error || !paciente) {
             return NextResponse.json({ error: 'Paciente não encontrado' }, { status: 404 });
         }
 
-        // Verificar se paciente pertence à clínica
-        if (paciente.clinicId !== clinicId) {
-            return NextResponse.json({ error: 'Acesso negado' }, { status: 403 });
-        }
-
-        // Buscar histórico de agendamentos
-        const todosAgendamentos = await database.appointments.findByClinic(clinicId);
-        const agendamentos = todosAgendamentos.filter(a => a.patientId === params.id);
-
-        // Buscar nomes dos dentistas
-        const usuarios = await database.users.findByClinic(clinicId);
-        const usuariosMap = new Map(usuarios.map(u => [u.id, u.name]));
+        // Buscar agendamentos do paciente
+        const { data: agendamentos } = await supabase
+            .from('appointments')
+            .select(`
+                *,
+                dentist:profiles(full_name)
+            `)
+            .eq('patient_id', params.id)
+            .eq('organization_id', clinicId)
+            .order('scheduled_at', { ascending: false });
 
         // Adicionar nome do dentista aos agendamentos
-        const agendamentosCompletos = agendamentos.map(ag => ({
+        const agendamentosCompletos = (agendamentos || []).map((ag: any) => ({
             ...ag,
-            dentistName: usuariosMap.get(ag.dentistId) || 'Dentista não encontrado',
+            dentistName: ag.dentist?.full_name || 'Dentista não encontrado',
         }));
 
         // Buscar prontuários
-        const prontuarios = await database.medicalRecords.findByPatient(params.id);
+        const { data: prontuarios } = await supabase
+            .from('medical_records')
+            .select('*')
+            .eq('patient_id', params.id)
+            .eq('organization_id', clinicId)
+            .order('created_at', { ascending: false });
 
-        // Buscar atendimentos
-        const todosAtendimentos = await database.consultations.findByClinic(clinicId);
-        const atendimentos = todosAtendimentos.filter(c => c.patientId === params.id);
+        // Buscar atendimentos (consultations)
+        const { data: atendimentos } = await supabase
+            .from('consultations')
+            .select('*')
+            .eq('patient_id', params.id)
+            .eq('organization_id', clinicId)
+            .order('started_at', { ascending: false });
+
+        const atendimentosList = atendimentos || [];
+        const agendamentosList = agendamentos || [];
 
         // Calcular estatísticas
+        const completedConsults = atendimentosList.filter((a: any) => a.status === 'COMPLETED');
         const stats = {
-            totalAtendimentos: atendimentos.filter(a => a.status === 'COMPLETED').length,
-            totalTempoAtendimento: atendimentos
-                .filter(a => a.status === 'COMPLETED')
-                .reduce((sum, a) => sum + (a.totalTime || 0), 0),
-            ultimoAtendimento: atendimentos
-                .filter(a => a.status === 'COMPLETED')
-                .sort((a, b) => new Date(b.endedAt || 0).getTime() - new Date(a.endedAt || 0).getTime())[0],
-            proximoAgendamento: agendamentos
-                .filter(a => a.status === 'SCHEDULED' && new Date(a.scheduledAt) > new Date())
-                .sort((a, b) => new Date(a.scheduledAt).getTime() - new Date(b.scheduledAt).getTime())[0],
+            totalAtendimentos: completedConsults.length,
+            totalTempoAtendimento: completedConsults.reduce((sum: number, a: any) => sum + (a.total_time || 0), 0),
+            ultimoAtendimento: completedConsults[0] || null,
+            proximoAgendamento: agendamentosList.find((a: any) =>
+                a.status === 'SCHEDULED' && new Date(a.scheduled_at) > new Date()
+            ) || null,
         };
 
         return NextResponse.json({
             paciente,
             agendamentos: agendamentosCompletos,
-            atendimentos,
-            prontuarios,
+            atendimentos: atendimentosList,
+            prontuarios: prontuarios || [],
             stats,
         });
     } catch (error) {
@@ -89,7 +106,8 @@ export async function PATCH(
     { params }: { params: { id: string } }
 ) {
     try {
-        const clinicId = getClinicId();
+        const supabase = await createClient();
+        const clinicId = await getClinicId(supabase);
         if (!clinicId) {
             return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
         }
@@ -102,12 +120,19 @@ export async function PATCH(
         if (cpf) updateData.cpf = cpf;
         if (phone) updateData.phone = phone;
         if (email !== undefined) updateData.email = email;
-        if (birthDate) updateData.birthDate = new Date(birthDate);
+        if (birthDate) updateData.birth_date = new Date(birthDate);
         if (notes !== undefined) updateData.notes = notes;
+        updateData.updated_at = new Date().toISOString();
 
-        const paciente = await database.patients.update(params.id, updateData);
+        const { data: paciente, error } = await supabase
+            .from('patients')
+            .update(updateData)
+            .eq('id', params.id)
+            .eq('organization_id', clinicId)
+            .select()
+            .single();
 
-        if (!paciente) {
+        if (error || !paciente) {
             return NextResponse.json({ error: 'Paciente não encontrado' }, { status: 404 });
         }
 
@@ -124,14 +149,19 @@ export async function DELETE(
     { params }: { params: { id: string } }
 ) {
     try {
-        const clinicId = getClinicId();
+        const supabase = await createClient();
+        const clinicId = await getClinicId(supabase);
         if (!clinicId) {
             return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
         }
 
-        const deleted = await database.patients.delete(params.id);
+        const { error } = await supabase
+            .from('patients')
+            .delete()
+            .eq('id', params.id)
+            .eq('organization_id', clinicId);
 
-        if (!deleted) {
+        if (error) {
             return NextResponse.json({ error: 'Paciente não encontrado' }, { status: 404 });
         }
 

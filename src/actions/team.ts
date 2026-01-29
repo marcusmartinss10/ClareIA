@@ -28,7 +28,7 @@ export async function inviteMember(email: string, role: Role) {
             .eq('user_id', user.id)
             .single();
 
-        if (!currentMember || currentMember.role !== 'ADMIN') {
+        if (!currentMember || currentMember.role?.toUpperCase() !== 'ADMIN') {
             return { error: 'Apenas administradores podem enviar convites.' };
         }
 
@@ -112,7 +112,7 @@ export async function removeMember(userIdToRemove: string) {
             .eq('user_id', user.id)
             .single();
 
-        if (!currentMember || currentMember.role !== 'ADMIN') {
+        if (!currentMember || currentMember.role?.toUpperCase() !== 'ADMIN') {
             return { error: 'Permissã negada.' };
         }
 
@@ -159,7 +159,7 @@ export async function updateMemberRole(userIdToUpdate: string, newRole: Role) {
             .eq('user_id', user.id)
             .single();
 
-        if (!currentMember || currentMember.role !== 'ADMIN') {
+        if (!currentMember || currentMember.role?.toUpperCase() !== 'ADMIN') {
             return { error: 'Permissã negada.' };
         }
 

@@ -37,8 +37,8 @@ export async function GET(request: NextRequest) {
             .from('appointments')
             .select(`
                 *,
-                patient:patients(name),
-                dentist:profiles(full_name)
+                patient:patients!left(name),
+                dentist:profiles!left(full_name)
             `)
             .eq('organization_id', clinicId);
 

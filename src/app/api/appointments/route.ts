@@ -61,9 +61,20 @@ export async function GET(request: NextRequest) {
             return NextResponse.json({ error: error.message }, { status: 500 });
         }
 
-        // Mapear para o formato esperado pelo frontend
+        // Mapear para o formato esperado pelo frontend (camelCase)
         const agendamentosCompletos = agendamentos.map((ag: any) => ({
-            ...ag,
+            id: ag.id,
+            organizationId: ag.organization_id,
+            patientId: ag.patient_id,
+            dentistId: ag.dentist_id,
+            scheduledAt: ag.scheduled_at,
+            duration: ag.duration,
+            reason: ag.reason,
+            status: ag.status,
+            adminNotes: ag.admin_notes,
+            paymentMethod: ag.payment_method,
+            createdAt: ag.created_at,
+            updatedAt: ag.updated_at,
             patientName: ag.patient?.name || 'Paciente não encontrado',
             dentistName: ag.dentist?.name || 'Dentista não encontrado',
         }));

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { database } from '@/lib/db';
 import { getSession } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 async function getClinicId(): Promise<string | null> {
     const session = await getSession();
     return session?.clinicId || null;

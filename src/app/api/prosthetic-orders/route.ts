@@ -9,6 +9,8 @@ import { database } from '@/lib/db';
 import { getSession } from '@/lib/auth';
 import { checkFeatureAccess } from '@/lib/plans';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
     try {
         const session = await getSession();

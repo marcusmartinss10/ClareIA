@@ -8,6 +8,8 @@ import { database } from '@/lib/db';
 import { getSession } from '@/lib/auth';
 import { supabaseAdmin } from '@/lib/supabase/client';
 
+export const dynamic = 'force-dynamic';
+
 const VALID_STATUSES = [
     'pending',
     'received',

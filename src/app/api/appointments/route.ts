@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
+import { supabaseAdmin } from '@/lib/supabase/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
@@ -94,7 +95,7 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const { data: agendamento, error } = await supabase
+        const { data: agendamento, error } = await supabaseAdmin
             .from('appointments')
             .insert({
                 organization_id: clinicId,

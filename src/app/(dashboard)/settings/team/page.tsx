@@ -104,15 +104,8 @@ export default function TeamSettingsPage() {
                     </div>
 
                     {/* Invite Section (Glass Panel) */}
-                    <section className="glass-panel rounded-3xl p-8 lg:p-10 shadow-2xl relative overflow-hidden">
-                        {/* Decorative Icon */}
-                        <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
-                            <svg className="w-32 h-32" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M15 12c3.31 0 6 2.69 6 6v1h-4v-1c0-1.66-1.34-3-3-3s-3 1.34-3 3v1H7v-1c0-3.31 2.69-6 6-6zm0-2c1.93 0 3.5-1.57 3.5-3.5S16.93 3 15 3 11.5 4.57 11.5 6.5 13.07 10 15 10zm-6 0c1.93 0 3.5-1.57 3.5-3.5S10.93 3 9 3 5.5 4.57 5.5 6.5 7.07 10 9 10z" />
-                            </svg>
-                        </div>
-
-                        <form onSubmit={handleInvite} className="relative z-10 space-y-8">
+                    <section className="glass-panel rounded-3xl p-8 lg:p-10 shadow-2xl">
+                        <form onSubmit={handleInvite} className="space-y-8">
                             <div>
                                 <h2 className="text-2xl font-bold text-white mb-2">Convidar Novo Membro</h2>
                                 <p className="text-white/50">Expanda sua clínica adicionando novos profissionais de saúde ou suporte administrativo.</p>

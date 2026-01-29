@@ -180,11 +180,6 @@ export default function ReportsPage() {
                   </svg>
                   {(data?.kpis.crescimento ?? 0) >= 0 ? '+' : ''}{data?.kpis.crescimento ?? 0}%
                 </p>
-                <div className="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                  <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z" />
-                  </svg>
-                </div>
               </div>
 
               {/* Lucro Líquido */}
@@ -197,11 +192,6 @@ export default function ReportsPage() {
                   </svg>
                   +8.2%
                 </p>
-                <div className="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                  <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z" />
-                  </svg>
-                </div>
               </div>
 
               {/* Inadimplência */}
@@ -214,11 +204,6 @@ export default function ReportsPage() {
                   </svg>
                   -1.5%
                 </p>
-                <div className="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                  <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
-                  </svg>
-                </div>
               </div>
 
               {/* Ticket Médio */}
@@ -231,11 +216,6 @@ export default function ReportsPage() {
                   </svg>
                   +3.1%
                 </p>
-                <div className="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                  <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z" />
-                  </svg>
-                </div>
               </div>
             </div>
 

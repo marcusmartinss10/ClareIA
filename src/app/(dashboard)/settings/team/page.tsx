@@ -83,12 +83,8 @@ export default function TeamSettingsPage() {
     };
 
     return (
-        <div className="relative min-h-screen">
-            {/* Background Decorative Orbs */}
-            <div className="fixed w-96 h-96 bg-primary/20 rounded-full blur-[80px] top-[-10%] left-[-5%] pointer-events-none z-0" />
-            <div className="fixed w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[80px] bottom-[-10%] right-[-5%] pointer-events-none z-0" />
-
-            <main className="relative z-10 px-4 py-10 lg:px-12">
+        <div className="min-h-screen">
+            <main className="px-4 py-10 lg:px-12">
                 <div className="max-w-[1000px] mx-auto space-y-8">
                     {/* Page Heading */}
                     <div className="flex flex-wrap items-end justify-between gap-6 px-4">

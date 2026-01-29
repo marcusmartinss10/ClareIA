@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
             .select(`
                 *,
                 patient:patients!left(name),
-                dentist:profiles!left(full_name)
+                dentist:users!left(name)
             `)
             .eq('organization_id', clinicId);
 
@@ -65,7 +65,7 @@ export async function GET(request: NextRequest) {
         const agendamentosCompletos = agendamentos.map((ag: any) => ({
             ...ag,
             patientName: ag.patient?.name || 'Paciente não encontrado',
-            dentistName: ag.dentist?.full_name || 'Dentista não encontrado',
+            dentistName: ag.dentist?.name || 'Dentista não encontrado',
         }));
 
         return NextResponse.json({ agendamentos: agendamentosCompletos });

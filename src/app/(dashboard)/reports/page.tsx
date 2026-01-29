@@ -175,7 +175,7 @@ export default function ReportsPage() {
                 <p className="text-white/40 text-xs font-bold uppercase tracking-wider mb-1">Faturamento Mensal</p>
                 <h3 className="text-2xl font-bold tracking-tight">{formatCurrency(data?.kpis.faturamentoMensal || 0)}</h3>
                 <p className={`text-xs mt-2 flex items-center gap-1 font-bold ${(data?.kpis.crescimento ?? 0) >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-3.5 h-3.5" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={(data?.kpis.crescimento ?? 0) >= 0 ? "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" : "M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"} />
                   </svg>
                   {(data?.kpis.crescimento ?? 0) >= 0 ? '+' : ''}{data?.kpis.crescimento ?? 0}%
@@ -187,7 +187,7 @@ export default function ReportsPage() {
                 <p className="text-white/40 text-xs font-bold uppercase tracking-wider mb-1">Lucro Líquido</p>
                 <h3 className="text-2xl font-bold tracking-tight">{formatCurrency(data?.kpis.lucroLiquido || 0)}</h3>
                 <p className="text-emerald-400 text-xs mt-2 flex items-center gap-1 font-bold">
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-3.5 h-3.5" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                   </svg>
                   +8.2%
@@ -199,7 +199,7 @@ export default function ReportsPage() {
                 <p className="text-white/40 text-xs font-bold uppercase tracking-wider mb-1">Inadimplência</p>
                 <h3 className="text-2xl font-bold tracking-tight">{data?.kpis.taxaInadimplencia || 0}%</h3>
                 <p className="text-rose-400 text-xs mt-2 flex items-center gap-1 font-bold">
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-3.5 h-3.5" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
                   </svg>
                   -1.5%
@@ -211,7 +211,7 @@ export default function ReportsPage() {
                 <p className="text-white/40 text-xs font-bold uppercase tracking-wider mb-1">Ticket Médio</p>
                 <h3 className="text-2xl font-bold tracking-tight">{formatCurrency(data?.kpis.ticketMedio || 0)}</h3>
                 <p className="text-emerald-400 text-xs mt-2 flex items-center gap-1 font-bold">
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-3.5 h-3.5" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                   </svg>
                   +3.1%
@@ -325,7 +325,7 @@ export default function ReportsPage() {
                 <h2 className="text-lg font-bold tracking-tight">Fluxo de Caixa Detalhado</h2>
                 <button className="text-xs font-bold text-primary flex items-center gap-1 hover:underline">
                   Exportar CSV
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-4 h-4" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                   </svg>
                 </button>

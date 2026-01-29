@@ -96,7 +96,7 @@ export default function TeamSettingsPage() {
                             </p>
                         </div>
                         <button className="flex items-center gap-2 px-6 py-3 rounded-full glass-panel hover:bg-white/10 text-white font-bold text-sm transition-all">
-                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg className="w-4 h-4" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                             </svg>
                             Exportar Relatório
@@ -133,7 +133,7 @@ export default function TeamSettingsPage() {
                                                 className="hidden"
                                             />
                                             <span className="flex items-center gap-2">
-                                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <svg className="w-5 h-5" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                                                 </svg>
                                                 Dentista
@@ -149,7 +149,7 @@ export default function TeamSettingsPage() {
                                                 className="hidden"
                                             />
                                             <span className="flex items-center gap-2">
-                                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <svg className="w-5 h-5" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                 </svg>
                                                 Recepcionista
@@ -162,7 +162,7 @@ export default function TeamSettingsPage() {
                                 <div className="space-y-4">
                                     <label className="text-sm font-semibold text-white/70 ml-2 uppercase tracking-widest">E-mail de Acesso</label>
                                     <div className="relative">
-                                        <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                         </svg>
                                         <input
@@ -194,7 +194,7 @@ export default function TeamSettingsPage() {
                                     disabled={inviteLoading}
                                     className="w-full sm:w-auto px-10 py-4 liquid-button rounded-full text-white font-black tracking-wide flex items-center justify-center gap-2 disabled:opacity-50"
                                 >
-                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg className="w-5 h-5" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                                     </svg>
                                     {inviteLoading ? 'Enviando...' : 'Enviar Convite'}
@@ -216,7 +216,7 @@ export default function TeamSettingsPage() {
                                 </div>
                             ) : members.length === 0 ? (
                                 <div className="glass-panel p-8 rounded-2xl text-center text-white/40">
-                                    <svg className="w-16 h-16 mx-auto mb-4 opacity-20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg className="w-16 h-16 mx-auto mb-4 opacity-20" width="64" height="64" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
                                     </svg>
                                     <p className="font-medium">Nenhum membro na equipe ainda</p>
@@ -243,7 +243,7 @@ export default function TeamSettingsPage() {
                                                             className="w-full h-full rounded-full object-cover"
                                                         />
                                                     ) : isPending ? (
-                                                        <svg className="w-6 h-6 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <svg className="w-6 h-6 text-white/20" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                                         </svg>
                                                     ) : (
@@ -260,7 +260,7 @@ export default function TeamSettingsPage() {
                                                     </p>
                                                     {isPending ? (
                                                         <span className="text-[10px] font-bold text-amber-500/80 bg-amber-500/10 px-2 py-0.5 rounded-full uppercase flex items-center gap-1 w-fit">
-                                                            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <svg className="w-3 h-3" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                             </svg>
                                                             Convite Pendente
@@ -285,7 +285,7 @@ export default function TeamSettingsPage() {
                                                                 onClick={() => handleRemove(member.user_id)}
                                                                 className="size-10 flex items-center justify-center rounded-full glass-panel text-red-400/50 hover:text-red-400 hover:bg-red-400/10 transition-all"
                                                             >
-                                                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <svg className="w-5 h-5" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                                 </svg>
                                                             </button>
@@ -295,7 +295,7 @@ export default function TeamSettingsPage() {
                                                             onClick={() => handleRemove(member.user_id)}
                                                             className="size-10 flex items-center justify-center rounded-full glass-panel hover:border-primary transition-colors text-white/40 hover:text-red-400"
                                                         >
-                                                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <svg className="w-5 h-5" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
                                                             </svg>
                                                         </button>

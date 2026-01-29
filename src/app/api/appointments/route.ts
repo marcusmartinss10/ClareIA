@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/client';
 import { NextRequest, NextResponse } from 'next/server';
 
+// Force redeploy - fixed snake_case to camelCase mapping
 export const dynamic = 'force-dynamic';
 
 async function getClinicId(supabase: any) {

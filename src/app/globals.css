@@ -1410,3 +1410,140 @@ a:hover {
   box-shadow: 0 0 40px rgba(43, 189, 238, 0.7);
   transform: translateY(-2px);
 }
+
+/* ========================================
+   LIQUID GLASS DARK EDITION
+   Glassmorphism Design System
+   ======================================== */
+
+/* Primary Color Override for Liquid Glass */
+:root {
+  --liquid-primary: #0db9f2;
+  --liquid-primary-rgb: 13, 185, 242;
+}
+
+/* Glass Panel - The core glassmorphism component */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Glass Input - Transparent inputs with glow focus */
+.glass-input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.glass-input:focus {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--liquid-primary);
+  box-shadow: 0 0 15px rgba(var(--liquid-primary-rgb), 0.3);
+  outline: none;
+}
+
+.glass-input::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+/* Liquid Button - Primary action with gradient glow */
+.liquid-button {
+  background: linear-gradient(135deg, #0db9f2 0%, #0891b2 100%);
+  box-shadow: 0 4px 15px rgba(var(--liquid-primary-rgb), 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.liquid-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(var(--liquid-primary-rgb), 0.6);
+}
+
+.liquid-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Utility: Size class for fixed dimensions */
+.size-2 {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+.size-10 {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.size-12 {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Glass Table - For dark themed data tables */
+.glass-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.glass-table th {
+  padding: 1rem 1.25rem;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Glass Card Hover Effect */
+.glass-card-hover {
+  transition: all 0.3s ease;
+}
+
+.glass-card-hover:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Decorative Glow Orb */
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Animate pulse for status indicators */
+@keyframes liquid-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+.liquid-pulse {
+  animation: liquid-pulse 2s ease-in-out infinite;
+}

@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { ToastProvider } from '@/components/Toast';
 import Logo from '@/components/Logo';
 import NotificationsPopover from '@/components/NotificationsPopover';
+import AIAssistant from '@/components/AIAssistant';
 
 interface User {
   id: string;
@@ -683,6 +684,9 @@ export default function DashboardLayout({
           </ToastProvider>
         </div>
       </main>
+
+      {/* AI Assistant Sidebar */}
+      <AIAssistant />
     </div>
   );
 }
